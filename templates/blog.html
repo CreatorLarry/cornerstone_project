@@ -1,0 +1,292 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Blogs</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+
+
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title accent-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">Blogs & News</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li class="current">Blogs & News</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+        <!-- Blog Posts Section -->
+        <section id="blog-posts" class="blog-posts section">
+
+            <div class="container">
+                <div class="row gy-4">
+
+                    <div class="col-lg-4">
+                        <article class="position-relative h-100">
+
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid uniform-img" alt="Sermon Thumbnail">
+                                <span class="post-date">January 15</span>
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+
+                                <h3 class="post-title">Growing in Faith Through Daily Devotion</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">Sarah Kimani</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">Faith and Spirituality</span>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Developing a consistent prayer and devotion habit can transform your spiritual
+                                    journey. Here are five practical ways to stay committed to daily devotion...
+                                </p>
+
+                                <hr>
+
+                                <a href="{% url 'blog-details' %}" class="readmore stretched-link"><span>Read More</span><i
+                                        class="bi bi-arrow-right"></i></a>
+
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+
+                    <div class="col-lg-4">
+                        <article class="position-relative h-100">
+
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{% static 'img/blog/blog-2.jpg' %}" class="img-fluid uniform-img" alt="Blog Thumbnail">
+                                <span class="post-date">February 10</span>
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+
+                                <h3 class="post-title">The Power of Giving: Why Tithing Matters</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">Pastor David Mwangi</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">Stewardship</span>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Tithing is more than just giving money—it’s a spiritual principle of trust and
+                                    obedience. Learn how faithful giving can bring blessings and impact the church
+                                    community...
+                                </p>
+
+                                <hr>
+
+                                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                                        class="bi bi-arrow-right"></i></a>
+
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+
+                    <div class="col-lg-4">
+                        <article class="position-relative h-100">
+
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{% static 'img/blog/blog-3.jpg' %}" class="img-fluid" alt="">
+                                <span class="post-date">March 5</span>
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+
+                                <h3 class="post-title">How to Serve God Through Your Talents.</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">James Muriuki</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">Ministry & Service</span>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Every believer has been blessed with unique gifts. Whether it’s music, teaching, or
+                                    administration, here’s how you can use your talents to serve in ministry...
+                                </p>
+
+                                <hr>
+
+                                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                                        class="bi bi-arrow-right"></i></a>
+
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+
+                    <div class="col-lg-4">
+                        <article class="position-relative h-100">
+
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{% static 'img/blog/blog-4.jpg' %}" class="img-fluid" alt="">
+                                <span class="post-date">April 21</span>
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+
+                                <h3 class="post-title">Overcoming Anxiety Through Scripture</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">Esther Wanjiru</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">Mental Wellness</span>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Life’s uncertainties can bring fear and anxiety, but God’s Word offers peace. Here
+                                    are 10 Bible verses to remind you of God’s promises during difficult times...
+                                </p>
+
+                                <hr>
+
+                                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                                        class="bi bi-arrow-right"></i></a>
+
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+
+                    <div class="col-lg-4">
+                        <article class="position-relative h-100">
+
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{% static 'img/blog/blog-5.jpg' %}" class="img-fluid" alt="">
+                                <span class="post-date">May 8</span>
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+
+                                <h3 class="post-title">Youth in the Church: Raising the Next Generation of Leaders</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">Peter Njoroge</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">Youth Ministry</span>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Engaging the youth in church activities helps them build a strong foundation in
+                                    faith. Discover ways to mentor and equip young leaders for the future...
+                                </p>
+
+                                <hr>
+
+                                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                                        class="bi bi-arrow-right"></i></a>
+
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+
+                    <div class="col-lg-4">
+                        <article class="position-relative h-100">
+
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{% static 'img/blog/blog-6.jpg' %}" class="img-fluid" alt="">
+                                <span class="post-date">June 30</span>
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+
+                                <h3 class="post-title">The Role of Worship in Strengthening Your Faith</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">Mercy Achieng</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">Worship & Music</span>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Worship is more than just singing—it’s a way to connect with God. Learn how true
+                                    worship can deepen your relationship with Christ...
+                                </p>
+
+                                <hr>
+
+                                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                                        class="bi bi-arrow-right"></i></a>
+
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+
+                </div>
+            </div>
+
+        </section>
+        <!-- /Blog Posts Section -->
+
+        <!-- Blog Pagination Section -->
+        <section id="blog-pagination" class="blog-pagination section">
+
+            <div class="container">
+                <div class="d-flex justify-content-center">
+                    <ul>
+                        <li><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#" class="active">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li>...</li>
+                        <li><a href="#">10</a></li>
+                        <li><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+        <!-- /Blog Pagination Section -->
+
+    </main>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

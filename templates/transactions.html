@@ -1,0 +1,65 @@
+{% extends 'dashboard_master.html' %}
+{% load static %}
+
+{% block title %}
+<title>Books Fines</title>
+{% endblock %}
+
+{% block extra_css %}
+<!-- Custom styles for this page -->
+<link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet' %}">
+{% endblock %}
+
+
+{% block extra_js %}
+<!-- Page level plugins -->
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Transactions</h1>
+<p class="mb-4">Money Transactions</p>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Mobile Money Transactions</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Transaction For</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Transaction For</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                    {% for transaction in fines %}
+                        <tr>
+                            <td>{{ transaction.name }}</td>
+                            <td>{{ transaction.member.first_name }}</td>
+                            <td>{{ transaction.amount }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% static '' %}

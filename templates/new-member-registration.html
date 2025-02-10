@@ -1,0 +1,232 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Register as a Member</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="{% static 'img/church_icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'login_assets/css/style.css' %}">
+
+    <style>
+        body {
+            background: url("{% static 'img/hero-carousel/img_two.png' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            height: 80px;
+        }
+
+        .sitename {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .login-wrap {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-4">
+                <div class="logo-container">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'img/logo_two.png' %}" alt="Church Logo">
+                    </a>
+                    <h5 class="sitename text-black-50">ACK ST ANDREWS CATHEDRAL, THIKA</h5>
+                    <span>Member Registration</span>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="wrap">
+                    <div class="login-wrap p-4 p-md-5">
+                        {% if messages %}
+                            <div class="alert alert-info">
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <form action="{% url 'new-member-registration' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group mt-3">
+                                <input type="text" name="first_name" class="form-control" required>
+                                <label class="form-control-placeholder" for="first_name">First Name</label>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <input type="text" name="second_name" class="form-control" required>
+                                <label class="form-control-placeholder" for="second_name">Second Name</label>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <input type="text" name="other_name" class="form-control" required>
+                                <label class="form-control-placeholder" for="other_name">Other Name</label>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <input type="text" name="phone" class="form-control" required>
+                                <label class="form-control-placeholder" for="phone">Phone</label>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="gender">Gender</label>
+                                <select name="gender" class="form-control" required>
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <input type="text" name="dob" class="form-control" required>
+                                <label class="form-control-placeholder" for="dob">Date of Birth</label>
+                            </div>
+
+
+                            <div class="form-group mt-3">
+                                <input type="text" name="email" class="form-control" required>
+                                <label class="form-control-placeholder" for="email">Email</label>
+                            </div>
+
+
+                            <div class="form-group mt-3">
+                                <label for="department">Department</label>
+                                <select name="department" class="form-control" required>
+                                    <option value="">-- Select Department --</option>
+                                    <option value="kayo">KAYO</option>
+                                    <option value="mothers_union">Mothers' Union</option>
+                                    <option value="kama">KAMA</option>
+                                    <option value="children">Children's</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="role">Role</label>
+                                <select name="role" class="form-control" required>
+                                    <option value="">-- Select Role --</option>
+                                    <option value="member">Member</option>
+                                    <option value="member">Leader</option>
+                                    <option value="member">Clergy</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile_picture">Profile Picture</label>
+                                {{ form.profile_picture }}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password1">Password</label>
+                                <input type="password" name="password1" class="form-control" required>
+                                <span toggle="#password1"
+                                      class="fa fa-fw fa-eye field-icon toggle-password mt-3"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password2">Confirm Password</label>
+                                <input type="password" name="password2" class="form-control" required>
+                                <span toggle="#password2"
+                                      class="fa fa-fw fa-eye field-icon toggle-password mt-3"></span>
+                            </div>
+
+
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="second_name">Second Name</label>#}
+                            {#                                {{ form.second_name }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="other_name">Other Name</label>#}
+                            {#                                {{ form.other_name }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="gender">Gender</label>#}
+                            {#                                {{ form.gender }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="dob">Date of Birth</label>#}
+                            {#                                {{ form.dob }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="email">Email</label>#}
+                            {#                                {{ form.email }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="department">Department</label>#}
+                            {#                                {{ form.department }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="profile_picture">Profile Picture</label>#}
+                            {#                                {{ form.profile_picture }}#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="password1">Password</label>#}
+                            {#                                {{ form.password1 }}#}
+                            {#                                <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password"></span>#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="form-group">#}
+                            {#                                <label for="password2">Confirm Password</label>#}
+                            {#                                {{ form.password2 }}#}
+                            {#                                <span toggle="#password2" class="fa fa-fw fa-eye field-icon toggle-password"></span>#}
+                            {#                            </div>#}
+
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">
+                                    Register
+                                </button>
+                            </div>
+                        </form>
+
+                        <p class="text-center">Already a member? <a href="{% url 'login' %}">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'login_assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'login_assets/js/popper.js' %}"></script>
+<script src="{% static 'login_assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'login_assets/js/main.js' %}"></script>
+
+<script>
+    $(".toggle-password").click(function () {
+        let input = $(this).prev("input");
+        if (input.attr("type") === "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
+
+</body>
+</html>

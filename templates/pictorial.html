@@ -1,0 +1,179 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Pictorial</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title accent-background">
+        <div class="container d-lg-flex justify-content-between align-items-center">
+            <h1 class="mb-2 mb-lg-0">Pictorial</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li class="current">Pictorial</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Pictorial Section -->
+    <section id="portfolio" class="portfolio section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Pictorial</h2>
+            <p>This Is What We've Been Doing</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                    <li data-filter="*" class="filter-active">All</li>
+                    <li data-filter=".filter-app">Church</li>
+                    <li data-filter=".filter-product">Departments</li>
+                    <li data-filter=".filter-branding">Events</li>
+                </ul><!-- End Portfolio Filters -->
+
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                        <img src="{% static 'img/portfolio/img_one.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Us</h4>
+                            <p>A Family Of Belivers</p>
+                            <a href="{% static 'img/portfolio/img_one.jpg' %}" title="App 1"
+                               data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+                        <img src="{% static 'img/portfolio/img_two.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Together</h4>
+                            <p>In Faith</p>
+                            <a href="{% static 'img/portfolio/img_two.jpg' %}" title="Product 1"
+                               data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+                        <img src="{% static 'img/portfolio/img_three.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Love</h4>
+                            <p>As Commanded By Christ</p>
+                            <a href="{% static 'img/portfolio/img_three.jpg' %}" title="Branding 1"
+                               data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                        <img src="{% static 'img/portfolio/img_four.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>What are we?</h4>
+                            <p>A COMMUNITY</p>
+                            <a href="{% static 'img/portfolio/img_four.jpg' %}" title="App 2"
+                               data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+                        <img src="{% static 'img/portfolio/img_five.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Join</h4>
+                            <p>Our Community</p>
+                            <a href="{% static 'img/portfolio/img_five.jpg' %}" title="Product 2"
+                               data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+                        <img src="{% static 'img/portfolio/img_six.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>We are Called</h4>
+                            <p>God's Children </p>
+                            <a href="{% static 'img/portfolio/img_six.jpg' %}" title="Branding 2"
+                               data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                        <img src="{% static 'img/portfolio/img_seven.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Choose Us</h4>
+                            <p>For Your Spiritual Journey</p>
+                            <a href="{% static 'img/portfolio/img_seven.jpg' %}" title="App 3"
+                               data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+                        <img src="{% static 'img/hero-carousel/img_three.png' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Product 3</h4>
+                            <p>Lorem ipsum, dolor sit</p>
+                            <a href="{% static 'img/hero-carousel/img_three.png' %}" title="Product 3"
+                               data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+                        <img src="{% static 'img/hero-carousel/img_two.png' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Feel Free</h4>
+                            <p>To come for our events</p>
+                            <a href="{% static 'img/hero-carousel/img_two.png' %}" title="Branding 2"
+                               data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                </div><!-- End Portfolio Container -->
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- /Pictorial Section -->
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

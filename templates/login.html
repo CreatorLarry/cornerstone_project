@@ -1,0 +1,117 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Login To Our Community</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="{% static 'img/church_icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'login_assets/css/style.css' %}">
+
+    <style>
+        body {
+            background: url("{% static 'img/hero-carousel/img_two.png' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            height: 80px;
+        }
+
+        .sitename {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .login-wrap {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-4">
+                <div class="logo-container">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'img/logo_two.png' %}" alt="Church Logo">
+                    </a>
+                    <h5 class="sitename text-black-50">ACK ST ANDREWS CATHEDRAL, THIKA</h5>
+                    <span>Member Login</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="wrap">
+                    <div class="login-wrap p-4 p-md-5">
+
+                        {% if messages %}
+                            <div class="alert alert-danger">
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <form action="{% url 'login' %}" method="POST" class="signin-form">
+                            {% csrf_token %}
+                            <div class="form-group mt-3">
+                                <input type="email" name="email" class="form-control" required>
+                                <label class="form-control-placeholder" for="email">Email</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control"
+                                       required>
+                                <label class="form-control-placeholder" for="password">Password</label>
+                                <span toggle="#passwordfield" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Log In
+                                </button>
+                            </div>
+                            <div class="form-group d-md-flex">
+                                <div class="w-50 text-left">
+                                    <label class="checkbox-wrap checkbox-primary mb-0">
+                                        <input type="checkbox" name="remember_me">
+                                        <span class="checkmark"></span> Remember Me
+                                    </label>
+                                </div>
+                                {#                                <div class="w-50 text-md-right">#}
+                                {#                                    <a href="#">Forgot Password?</a>#}
+                                {#                                </div>#}
+                            </div>
+                        </form>
+                        <p class="text-center">Not a member? <a href="{% url 'new-member-registration' %}">Register</a>
+                        </p>
+
+                        <p class="text-center"><a href="{% url 'home' %}">Home</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'login_assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'login_assets/js/popper.js' %}"></script>
+<script src="{% static 'login_assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'login_assets/js/main.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+{% extends 'dashboard_master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Update Profile</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Info Section -->
+    <div class="card shadow mb-4">
+        <div class="card-body text-center">
+            {% if member.profile_pic %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle"
+                     width="150">
+            {% else %}
+                <img class="img-fluid mx-auto d-block profile"
+                     src="{% static 'dashboard_assets/img/undraw_profile.svg' %}" alt="profile_picture" width="150">
+            {% endif %}
+            <h4 class="mt-2">{{ user.first_name }} {{ user.second_name }}</h4>
+            <p>{{ user.email }}</p>
+        </div>
+    </div>
+    <!-- End Info Section -->
+
+    <!-- Edit Profile Section -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name"
+                           value="{{ user.first_name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="second_name">Second Name:</label>
+                    <input type="text" class="form-control" id="second_name" name="second_name"
+                           value="{{ user.second_name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="other_name">Other Name:</label>
+                    <input type="text" class="form-control" id="other_name" name="other_name"
+                           value="{{ user.other_name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" value="{{ user.phone }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select name="gender" class="form-control">
+                        <option value="M" {% if user.gender == "M" %}selected{% endif %}>Male</option>
+                        <option value="F" {% if user.gender == "F" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" class="form-control" id="dob" name="dob" value="{{ user.dob|date:'Y-m-d' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <select name="department" class="form-control">
+                        <option value="kayo" {% if user.department == "kayo" %}selected{% endif %}>KAYO</option>
+                        <option value="mothers_union" {% if user.department == "mothers_union" %}selected{% endif %}>
+                            Mothers' Union
+                        </option>
+                        <option value="kama" {% if user.department == "kama" %}selected{% endif %}>KAMA</option>
+                        <option value="children" {% if user.department == "children" %}selected{% endif %}>Children's
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select name="role" class="form-control">
+                        <option value="member" {% if user.role == "member" %}selected{% endif %}>Member</option>
+                        <option value="leader" {% if user.role == "leader" %}selected{% endif %}>Leader</option>
+                        <option value="clergy" {% if user.role == "clergy" %}selected{% endif %}>Clergy</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile_picture">Profile Picture:</label>
+                    <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
