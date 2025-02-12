@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from main.models import Member, Event, Sermon, Blog, Deposit
+from main.models import Member, Event, Sermon, Blog, Deposit, EventRegistration
 
 
 @admin.register(Member)
@@ -38,6 +38,11 @@ class MemberAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'date', 'time', 'location')
     search_fields = ('title', 'location')
+
+@admin.register(EventRegistration)
+class EventRegistrationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'event', 'registered_on')
+    list_filter = ('event',)
 
 
 @admin.register(Sermon)

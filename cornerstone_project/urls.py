@@ -38,11 +38,13 @@ urlpatterns = [
 
                   path('blog/', views.blog, name='blog'),
 
-                  path('blog/<slug:slug>/', views.blog_detail, name='blog-detail'),
+                  path("blog/<slug:slug>/", views.blog_detail, name="blog-detail"),
+
+                  path("blog/<slug:slug>/comment/", views.add_comment, name="add_comment"),
 
                   path('events/', views.events, name='events'),
 
-                  path('events/event-details/', views.event_details, name='event-details'),
+                  path('events/event-details/<int:event_id>/', views.event_details, name='event-details'),
 
                   path('departments/', views.departments, name='departments'),
 
@@ -92,9 +94,11 @@ urlpatterns = [
 
                   path("events/upload/", views.upload_event, name="upload_event"),
 
-                  path("events/register/<int:event_id>/", views.register_event, name="register_event"),
+                  path('register/<int:event_id>/', views.register_event, name='register_event'),
 
                   path("blogs/upload/", views.upload_blog, name="upload_blog"),
+
+                  path("blogs/add-comment", views.add_comment, name="add_comment"),
 
                   path("sermons/upload/", views.upload_sermon, name="upload_sermon"),
 

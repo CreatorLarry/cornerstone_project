@@ -44,8 +44,8 @@
                             </div>
                             <p>{{ event.description|truncatewords:20 }}</p>
                             <hr>
-                            <a href="#" class="readmore stretched-link">
-{#                                {% url 'event-details' event.id %}#}
+                            <a href="{% url 'event-details' event.id %}" class="readmore stretched-link">
+
                                 <span>More Info</span><i class="bi bi-arrow-right"></i>
                             </a>
                         </div>

@@ -25,9 +25,112 @@
     </div>
     <!-- End Page Title -->
 
->
+    >
 {% endblock %}
 
 {% block extra_js %}
 
 {% endblock %}
+
+
+
+
+<!-- Event Details Section -->
+<section id="blog-details" class="blog-details section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article class="article">
+
+                    <div class="post-img">
+                        <img src="{{ events.image.url }}" alt="{{ events.title }}" class="img-fluid mb-3">
+                    </div>
+
+                    <h2>{{ events.title }}</h2>
+
+                    <div class="meta-top">
+                        <ul>
+                            <p><strong>Date:</strong> {{ events.date }}</p>
+                            <p><strong>Time:</strong> {{ events.time }}</p>
+                            <p><strong>Location:</strong> {{ events.location }}</p>
+                            <p><strong>Organizer:</strong> {{ events.organizer }}</p>
+                        </ul>
+                    </div><!-- End meta top -->
+
+                    <div class="content">
+                        <p><strong>Description:</strong> {{ events.description }}</p>
+                    </div>
+
+                </article>
+            </div>
+
+            <div class="col-lg-4 sidebar">
+                <div class="widgets-container">
+                    <div class="card p-3">
+                        <h3 class="mb-3">Register for this Event</h3>
+                        {% if events.id %}
+                            <form method="post" action="{% url 'register_event' events.id %}">
+                        {% else %}
+                            <p>Error: Event ID is missing!</p>
+                        {% endif %}
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section><!-- /Event Details Section -->
+
+<div class="container">
+    <div class="row">
+
+        <!-- Event Details Section -->
+        <div class="col-lg-8">
+            <h2>{{ events.title }}</h2>
+            <img src="{{ events.image.url }}" alt="{{ events.title }}" class="img-fluid mb-3">
+            <p><strong>Description:</strong> {{ events.description }}</p>
+            <p><strong>Date:</strong> {{ events.date }}</p>
+            <p><strong>Time:</strong> {{ events.time }}</p>
+            <p><strong>Location:</strong> {{ events.location }}</p>
+            <p><strong>Organizer:</strong> {{ events.organizer }}</p>
+        </div>
+
+        <!-- Sidebar - Registration Panel -->
+        <div class="col-lg-4 sidebar">
+            <div class="widgets-container">
+                <div class="card p-3">
+                    <h3 class="mb-3">Register for this Event</h3>
+                    {% if events.id %}
+                        <form method="post" action="{% url 'register_event' events.id %}">
+                    {% else %}
+                        <p>Error: Event ID is missing!</p>
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

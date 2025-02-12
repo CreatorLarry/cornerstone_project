@@ -29,7 +29,12 @@
                         <div class="col-lg-4">
                             <article class="position-relative h-100">
                                 <div class="post-img position-relative overflow-hidden">
-                                    <img src="{{ sermon.image.url }}" class="img-fluid" alt="{{ sermon.title }}">
+                                    {% if sermon.image %}
+                                        <img src="{{ sermon.image.url }}" class="img-fluid" alt="{{ sermon.title }}">
+                                    {% else %}
+                                        <img src="{% static 'img/blog/img_2.png' %}" class="img-fluid"
+                                             alt="Default sermon image">
+                                    {% endif %}
                                     <span class="post-date">{{ sermon.date|date:"F d, Y" }}</span>
                                 </div>
 
@@ -40,10 +45,15 @@
                                     </div>
                                     <p>{{ sermon.description|truncatewords:20 }}</p>
                                     <hr>
-                                    <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                        <i class="bi bi-play-circle"></i>
-                                        <a href="{{ sermon.video_url }}" class="readmore stretched-link">Watch Sermon</a>
-                                    </div>
+                                    {% if sermon.video_url %}
+                                        <div class="watch-video d-flex align-items-center">
+                                            <i class="bi bi-play-circle"></i>
+                                            <a href="{{ sermon.video_url }}" target="_blank" class="readmore stretched-link">Watch
+                                                Sermon</a>
+                                        </div>
+                                    {% else %}
+                                        <p class="text-muted">Video not available</p>
+                                    {% endif %}
                                 </div>
                             </article>
                         </div>

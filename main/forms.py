@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from main.models import Member
 
-from .models import Event, Blog, Sermon
+from .models import Event, Blog, Sermon, Comment
 
 
 class MemberRegistrationForm(UserCreationForm):
@@ -14,6 +14,7 @@ class MemberRegistrationForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Phone Number'}),
         required=True
     )
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}))
 
     class Meta:
         model = Member
@@ -76,3 +77,8 @@ class SermonForm(forms.ModelForm):
         exclude = ['date']
         fields = ['title', 'preacher', 'date', 'audio_file', 'video_url', 'description']
 
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["name", "email", "content"]

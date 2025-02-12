@@ -10,6 +10,8 @@ from django.template.defaulttags import now
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 
+from .forms import CommentForm
+
 import base64
 from datetime import datetime
 
@@ -37,7 +39,7 @@ import os
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Event, EventRegistration, Blog, Sermon
+from .models import Event, EventRegistration, Blog, Sermon, Comment
 from .forms import EventForm, BlogForm, SermonForm
 from django.contrib.auth.decorators import login_required
 
@@ -65,12 +67,15 @@ def pictorial(request):
 
 def sermon(request):
     sermons = Sermon.objects.all()
+    paginator = Paginator(sermons, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(request, 'sermon.html', {'sermons': sermons})
 
 
 def blog(request):
-    blogs = Blog.objects.all().order_by('-created_at')  # Fetch blogs ordered by newest first
-    paginator = Paginator(blogs, 6)  # Show 6 blogs per page
+    blogs = Blog.objects.all().order_by('-created_at')
+    paginator = Paginator(blogs, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -78,17 +83,22 @@ def blog(request):
 
 
 def events(request):
-    events = Event.objects.all()  # Fetch all events
+    events = Event.objects.all()
+    paginator = Paginator(events, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(request, 'events.html', {'events': events})
 
 
 def blog_detail(request, slug):
     blog_post = get_object_or_404(Blog, slug=slug)
-    return render(request, 'blog-details.html', {'blog_post': blog_post})
+    comments = Comment.objects.filter(blog=blog_post)
+    return render(request, 'blog-details.html', {'blog_post': blog_post, 'comments': comments})
 
 
-def event_details(request):
-    return render(request, 'events-details.html')
+def event_details(request, event_id):
+    events = get_object_or_404(Event, id=event_id)
+    return render(request, 'events-details.html', {'events': events})
 
 
 def departments(request):
@@ -406,12 +416,20 @@ def upload_event(request):
 
 
 # Register for an Event
-@login_required
 def register_event(request, event_id):
-    event = Event.objects.get(id=event_id)
-    EventRegistration.objects.create(user=request.user, event=event)
-    messages.success(request, f"You have successfully registered for {event.title}.")
-    return redirect("events_list")
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+
+        # Create and save registration
+        registration = EventRegistration.objects.create(event=event, email=email)
+        registration.save()
+
+        return redirect("event-details", event_id=event.id)  # Redirect to event details
+
+    return render(request, "events-details.html", {"event": event})
 
 
 # Upload a Blog Post
@@ -440,3 +458,23 @@ def upload_sermon(request):
     else:
         form = SermonForm()
     return render(request, "sermons/upload.html", {"form": form})
+
+
+@csrf_exempt
+def add_comment(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        content = request.POST.get("comment")
+
+        if name and email and content:
+            Comment.objects.create(
+                blog=blog,
+                name=name,
+                email=email,
+                content=content
+            )
+
+    return redirect("blog-detail", slug=blog.slug)

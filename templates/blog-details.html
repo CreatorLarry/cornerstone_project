@@ -29,7 +29,7 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-8">
+                <div class="col-lg-12">
 
                     <!-- Blog Details Section -->
                     <section id="blog" class="blog">
@@ -65,147 +65,72 @@
                                         </div>
                                     </article>
 
-                                    <!-- Comments Section -->
-                                    <div class="blog-comments">
-                                        <h4 class="comments-count">{{ blog_post.comments.count }} Comments</h4>
-                                        <ul class="comments-list">
-                                            {% for comment in blog_post.comments.all %}
-                                                <li class="comment">
-                                                    <div>
-                                                        <h5>{{ comment.name }}</h5>
-                                                        <time datetime="{{ comment.created_at|date:'Y-m-d' }}">{{ comment.created_at|date:"F d, Y" }}</time>
-                                                        <p>{{ comment.content }}</p>
-                                                    </div>
-                                                </li>
-                                            {% empty %}
-                                                <li>No comments yet.</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                    <!-- Blog Comments Section -->
+                                    <section id="blog-comments" class="blog-comments section">
+                                        <div class="container">
+                                            <h4 class="comments-count">{{ comments.count }} Comments</h4>
 
-                                    <!-- Comment Form -->
-                                    <div class="reply-form">
-                                        <h4>Leave a Comment</h4>
-                                        <form action="{% url 'add_comment' blog_post.id %}" method="post">
-                                            {% csrf_token %}
-                                            <div class="row">
-                                                <div class="col-md-6 form-group">
-                                                    <input type="text" name="name" class="form-control"
-                                                           placeholder="Your Name" required>
+                                            {% for comment in comments %}
+                                                <div id="comment-{{ comment.id }}" class="comment">
+                                                    <div class="d-flex">
+                                                        <div class="comment-img">
+                                                            <img src="{% static 'img/blog/default-user.jpg' %}"
+                                                                 alt="User">
+                                                        </div>
+                                                        <div>
+                                                            <h5><a href="#">{{ comment.name }}</a></h5>
+                                                            <time datetime="{{ comment.created_at|date:'Y-m-d' }}">{{ comment.created_at|date:"F d, Y" }}</time>
+                                                            <p>{{ comment.content }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- End comment -->
+                                            {% empty %}
+                                                <p>No comments yet. Be the first to comment!</p>
+                                            {% endfor %}
+                                        </div>
+                                    </section><!-- /Blog Comments Section -->
+
+
+                                    <!-- Comment Form Section -->
+                                    <section id="comment-form" class="comment-form section">
+                                        <div class="container">
+
+                                            <form action="{% url 'add_comment' blog_post.slug %}" method="POST">
+                                                {% csrf_token %}
+                                                <h4>Post Comment</h4>
+                                                <p>Your email address will not be published. Required fields are marked
+                                                    *</p>
+                                                <div class="row">
+                                                    <div class="col-md-6 form-group">
+                                                        <input name="name" type="text" class="form-control"
+                                                               placeholder="Your Name" required>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <input name="email" type="email" class="form-control"
+                                                               placeholder="Your Email" required>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6 form-group">
-                                                    <input type="email" name="email" class="form-control"
-                                                           placeholder="Your Email" required>
+                                                <div class="row">
+                                                    <div class="col form-group">
+                                                        <textarea name="comment" class="form-control"
+                                                                  placeholder="Comment" required></textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col form-group">
-                                                    <textarea name="content" class="form-control"
-                                                              placeholder="Your Comment" required></textarea>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Post Comment</button>
                                                 </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Post Comment</button>
-                                        </form>
-                                    </div>
+                                            </form>
+
+
+                                        </div>
+                                    </section>
+                                    <!-- /Comment Form Section -->
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
 
-                <div class="col-lg-4 sidebar">
-
-                    <div class="widgets-container">
-
-                        <!-- Blog Author Widget -->
-                        <div class="blog-author-widget widget-item">
-
-                            <div class="d-flex flex-column align-items-center">
-                                <img src="{% static 'img/blog/blog-author.jpg' %}" class="rounded-circle flex-shrink-0"
-                                     alt="">
-                                <h4>Jane Smith</h4>
-                                <div class="social-links">
-                                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
-                                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
-                                    <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
-                                    <a href="https://instagram.com/#"><i class="biu bi-linkedin"></i></a>
-                                </div>
-
-                                <p>
-                                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus
-                                    accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse
-                                    et accusantium ut unde voluptas.
-                                </p>
-
-                            </div>
-                        </div><!--/Blog Author Widget -->
-
-                        <!-- Search Widget -->
-                        <div class="search-widget widget-item">
-
-                            <h3 class="widget-title">Search</h3>
-                            <form action="">
-                                <input type="text">
-                                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-                            </form>
-
-                        </div><!--/Search Widget -->
-
-                        <!-- Recent Posts Widget -->
-                        <div class="recent-posts-widget widget-item">
-
-                            <h3 class="widget-title">Recent Posts</h3>
-
-                            <div class="post-item">
-                                <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
-                                <time datetime="2020-01-01">Jan 1, 2020</time>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
-                                <time datetime="2020-01-01">Jan 1, 2020</time>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a></h4>
-                                <time datetime="2020-01-01">Jan 1, 2020</time>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
-                                <time datetime="2020-01-01">Jan 1, 2020</time>
-                            </div><!-- End recent post item-->
-
-                            <div class="post-item">
-                                <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
-                                <time datetime="2020-01-01">Jan 1, 2020</time>
-                            </div><!-- End recent post item-->
-
-                        </div><!--/Recent Posts Widget -->
-
-                        <!-- Tags Widget -->
-                        <div class="tags-widget widget-item">
-
-                            <h3 class="widget-title">Tags</h3>
-                            <ul>
-                                <li><a href="#">App</a></li>
-                                <li><a href="#">IT</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Mac</a></li>
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Office</a></li>
-                                <li><a href="#">Creative</a></li>
-                                <li><a href="#">Studio</a></li>
-                                <li><a href="#">Smart</a></li>
-                                <li><a href="#">Tips</a></li>
-                                <li><a href="#">Marketing</a></li>
-                            </ul>
-
-                        </div><!--/Tags Widget -->
-
-                    </div>
-
-                </div>
 
             </div>
         </div>

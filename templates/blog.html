@@ -6,80 +6,92 @@
 {% endblock %}
 
 {% block content %}
-<main class="main">
-    <div class="page-title accent-background">
-        <div class="container d-lg-flex justify-content-between align-items-center">
-            <h1 class="mb-2 mb-lg-0">Blogs & News</h1>
-            <nav class="breadcrumbs">
-                <ol>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li class="current">Blogs & News</li>
-                </ol>
-            </nav>
+    <main class="main">
+        <div class="page-title accent-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">Blogs & News</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li class="current">Blogs & News</li>
+                    </ol>
+                </nav>
+            </div>
         </div>
-    </div>
 
-    <!-- Blog Posts Section -->
-    <section id="blog-posts" class="blog-posts section">
-        <div class="container">
-            <div class="row gy-4">
-                {% for blog in page_obj %}
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{{ blog.image.url }}" class="img-fluid uniform-img" alt="{{ blog.title }}">
-                                <span class="post-date">{{ blog.created_at|date:"F d" }}</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-                                <h3 class="post-title">{{ blog.title }}</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">{{ blog.author }}</span>
-                                    </div>
-                                    <span class="px-3 text-black-50">/</span>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-folder2"></i> <span class="ps-2">{{ blog.category }}</span>
-                                    </div>
+        <!-- Blog Posts Section -->
+        <section id="blog-posts" class="blog-posts section">
+            <div class="container">
+                <div class="row gy-4">
+                    {% for blog in page_obj %}
+                        <div class="col-lg-4">
+                            <article class="position-relative h-100">
+                                <div class="post-img position-relative overflow-hidden">
+                                    {% if blog_post.image %}
+                                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}"
+                                             class="img-fluid">
+                                    {% else %}
+                                        <img src="{% static 'img/blog/img_1.png' %}" alt="No image available"
+                                             class="img-fluid">
+                                    {% endif %}
+{#                                    <img src="{{ blog.image.url }}" class="img-fluid uniform-img"#}
+{#                                         alt="{{ blog.title }}">#}
+                                    <span class="post-date">{{ blog.created_at|date:"F d" }}</span>
                                 </div>
 
-                                <p>{{ blog.summary }}</p>
+                                <div class="post-content d-flex flex-column">
+                                    <h3 class="post-title">{{ blog.title }}</h3>
 
-                                <hr>
+                                    <div class="meta d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-person"></i> <span class="ps-2">{{ blog.author }}</span>
+                                        </div>
+                                        <span class="px-3 text-black-50">/</span>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-folder2"></i> <span class="ps-2">{{ blog.category }}</span>
+                                        </div>
+                                    </div>
 
-                                <a href="{% url 'blog_detail' slug=blog_post.slug %}" class="readmore stretched-link">
-                                    <span>Read More</span><i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                {% empty %}
-                    <p>No blogs available at the moment.</p>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
+                                    <p>{{ blog.summary }}</p>
 
-    <!-- Blog Pagination Section -->
-    <section id="blog-pagination" class="blog-pagination section">
-        <div class="container">
-            <div class="d-flex justify-content-center">
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        <li><a href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
-                    {% endif %}
+                                    <hr>
 
-                    {% for num in page_obj.paginator.page_range %}
-                        <li><a href="?page={{ num }}" class="{% if page_obj.number == num %}active{% endif %}">{{ num }}</a></li>
+                                    <a href="{% url 'blog-detail' slug=blog.slug %}"
+                                       class="readmore stretched-link">
+                                        <span>Read More</span><i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        </div>
+                    {% empty %}
+                        <p>No blogs available at the moment.</p>
                     {% endfor %}
-
-                    {% if page_obj.has_next %}
-                        <li><a href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
-                    {% endif %}
-                </ul>
+                </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+
+        <!-- Blog Pagination Section -->
+        <section id="blog-pagination" class="blog-pagination section">
+            <div class="container">
+                <div class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}"><i
+                                    class="bi bi-chevron-left"></i></a></li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            <li><a href="?page={{ num }}"
+                                   class="{% if page_obj.number == num %}active{% endif %}">{{ num }}</a></li>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
