@@ -38,8 +38,13 @@
                                 <div class="col-lg-8 entries">
                                     <article class="entry entry-single">
                                         <div class="entry-img">
-                                            <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}"
-                                                 class="img-fluid">
+                                            {% if blog_post.image %}
+                                                <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}"
+                                                     class="img-fluid">
+                                            {% else %}
+                                                <img src="{% static 'img/blog/img_1.png' %}" alt="No image available"
+                                                     class="img-fluid">
+                                            {% endif %}
                                         </div>
                                         <h2 class="entry-title">
                                             {{ blog_post.title }}

@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed55e93b-801c-4162-bbbe-3a62f95b9eca" name="Changes" comment="dashboard, check">
+      <change afterPath="$PROJECT_DIR$/main/assets/img/blog/img_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cornerstone_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cornerstone_project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/member_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/member_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/blog-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog-details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/blog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,18 +28,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "CreatorLarry"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;CreatorLarry&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:CreatorLarry/cornerstone_project.git",
-    "accountId": "409726a6-1946-4367-8c82-b8838d5e5c17"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:CreatorLarry/cornerstone_project.git&quot;,
+    &quot;accountId&quot;: &quot;409726a6-1946-4367-8c82-b8838d5e5c17&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -134,6 +136,7 @@
       <workItem from="1739075913574" duration="593000" />
       <workItem from="1739087650952" duration="47015000" />
       <workItem from="1739252099577" duration="1128000" />
+      <workItem from="1739321647544" duration="2508000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard, check">
       <option name="closed" value="true" />

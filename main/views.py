@@ -64,7 +64,8 @@ def pictorial(request):
 
 
 def sermon(request):
-    return render(request, 'sermon.html')
+    sermons = Sermon.objects.all()
+    return render(request, 'sermon.html', {'sermons': sermons})
 
 
 def blog(request):

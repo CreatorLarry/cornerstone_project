@@ -4,6 +4,7 @@ from django.db import models
 
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -68,26 +69,20 @@ class Member(AbstractBaseUser, PermissionsMixin):
 
 # Blog Model
 class Blog(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=100)
-    category = models.CharField(max_length=100, choices=(
-        ('announcement', 'Announcement'), ('testimony', 'Testimony'), ('devotional', 'Devotional'), ('news', 'News')),
-                                default='news')
-    image = models.ImageField(upload_to='blogs', default='blogs/default.jpg')
-    summary = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(unique=True, blank=True)
+    image = models.ImageField(upload_to='blog_pictures', default='dashboard_assets/img/undraw_blog.jpg', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title)  # Auto-generate slug
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
-
-
 
 
 # Sermon Model
@@ -158,3 +153,11 @@ class EventRegistration(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.event.title}"
+
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
