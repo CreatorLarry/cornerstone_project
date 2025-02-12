@@ -2,11 +2,7 @@
 {% load static %}
 
 {% block title %}
-    <title>Sermon</title>
-{% endblock %}
-
-{% block extra_css %}
-
+    <title>Sermons</title>
 {% endblock %}
 
 {% block content %}
@@ -25,239 +21,53 @@
         </div>
         <!-- End Page Title -->
 
-        <!-- Blog Posts Section -->
-        <section id="blog-posts" class="blog-posts section">
-
+        <!-- Sermons Section -->
+        <section id="sermons" class="sermons section">
             <div class="container">
                 <div class="row gy-4">
+                    {% for sermon in sermons %}
+                        <div class="col-lg-4">
+                            <article class="position-relative h-100">
+                                <div class="post-img position-relative overflow-hidden">
+                                    <img src="{{ sermon.image.url }}" class="img-fluid" alt="{{ sermon.title }}">
+                                    <span class="post-date">{{ sermon.date|date:"F d, Y" }}</span>
+                                </div>
 
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
-                                <span class="post-date">January 14, 2025</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-
-                                <h3 class="post-title">Walking in Faith, Not Fear</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">Rev. Samuel Muthoni</span>
+                                <div class="post-content d-flex flex-column">
+                                    <h3 class="post-title">{{ sermon.title }}</h3>
+                                    <div class="meta d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">{{ sermon.preacher }}</span>
+                                    </div>
+                                    <p>{{ sermon.description|truncatewords:20 }}</p>
+                                    <hr>
+                                    <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
+                                        <i class="bi bi-play-circle"></i>
+                                        <a href="{{ sermon.video_url }}" class="readmore stretched-link">Watch Sermon</a>
                                     </div>
                                 </div>
-
-                                <p>
-                                    Fear can paralyze us, but God calls us to walk by faith. In this sermon, Rev.
-                                    Muthoni shares practical steps to trust God in uncertain times.
-                                </p>
-
-                                <hr>
-
-                                <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                    <i class="bi bi-play-circle"></i>
-                                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                                       class="readmore stretched-link">Watch
-                                        Sermon</a>
-                                </div>
-                            </div>
-
-                        </article>
-                    </div><!-- End post list item -->
-
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{% static 'img/blog/blog-4.jpg' %}" class="img-fluid" alt="">
-                                <span class="post-date">February 4, 2025</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-
-                                <h3 class="post-title">The Power of Prayer in Difficult Times</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">Pastor Grace Wanjiru</span>
-                                    </div>
-                                </div>
-
-                                <p>
-                                    When life gets tough, prayer is our lifeline. This sermon explores biblical examples
-                                    of powerful prayers and how we can apply them today.
-                                </p>
-
-                                <hr>
-
-                                <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                    <i class="bi bi-play-circle"></i>
-                                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                                       class="readmore stretched-link">Watch
-                                        Sermon</a>
-                                </div>
-                            </div>
-
-                        </article>
-                    </div><!-- End post list item -->
-
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{% static 'img/blog/blog-5.jpg' %}" class="img-fluid" alt="">
-                                <span class="post-date">February 18, 2025</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-
-                                <h3 class="post-title">The Holy Spirit: Our Guide and Comforter</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">Bishop Daniel Mwangi</span>
-                                    </div>
-                                </div>
-
-                                <p>
-                                    Many Christians struggle to understand the role of the Holy Spirit. This message
-                                    explains how the Holy Spirit empowers us to live a victorious life.
-                                </p>
-
-                                <hr>
-
-                                <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                    <i class="bi bi-play-circle"></i>
-                                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                                       class="readmore stretched-link">Watch
-                                        Sermon</a>
-                                </div>
-                            </div>
-
-                        </article>
-                    </div><!-- End post list item -->
-
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{% static 'img/blog/blog-3.jpg' %}" class="img-fluid" alt="">
-                                <span class="post-date">March 3, 2025</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-
-                                <h3 class="post-title">God's Plan for Your Life</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">Pastor Lucy Ndungu</span>
-                                    </div>
-                                </div>
-
-                                <p>
-                                    Do you ever wonder what God’s plan is for your life? This sermon uncovers biblical
-                                    truths on how to discover and walk in God’s purpose for you.
-                                </p>
-
-                                <hr>
-
-                                <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                    <i class="bi bi-play-circle"></i>
-                                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                                       class="readmore stretched-link">Watch
-                                        Sermon</a>
-                                </div>
-                            </div>
-
-                        </article>
-                    </div><!-- End post list item -->
-
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
-                                <span class="post-date">March 17, 2025</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-
-                                <h3 class="post-title">Forgiveness: The Key to Freedom</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">Rev. Peter Karanja</span>
-                                    </div>
-                                </div>
-
-                                <p>
-                                    Unforgiveness can hold us back, but God calls us to forgive. In this powerful
-                                    sermon, learn how to release past hurts and walk in freedom.
-                                </p>
-
-                                <hr>
-
-                                <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                    <i class="bi bi-play-circle"></i>
-                                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                                       class="readmore stretched-link">Watch
-                                        Sermon</a>
-                                </div>
-                            </div>
-
-                        </article>
-                    </div><!-- End post list item -->
-
-                    <div class="col-lg-4">
-                        <article class="position-relative h-100">
-
-                            <div class="post-img position-relative overflow-hidden">
-                                <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
-                                <span class="post-date">February 3, 2025</span>
-                            </div>
-
-                            <div class="post-content d-flex flex-column">
-
-                                <h3 class="post-title">He was Born, Killed and Rose from the Dead for You.</h3>
-
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span
-                                            class="ps-2">Very Rev Canon Stephen Nduati</span>
-                                    </div>
-                                </div>
-
-                                <p>
-                                    From the manger to the cross and the empty tomb, Jesus Christ’s journey was one of
-                                    love, sacrifice, and victory.
-                                </p>
-
-                                <hr>
-
-                                <div class="watch-video d-flex align-items-center position-relative readmore stretched-link">
-                                    <i class="bi bi-play-circle"></i>
-                                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                                       class="readmore stretched-link">Watch
-                                        Sermon</a>
-                                </div>
-                            </div>
-
-                        </article>
-                    </div><!-- End post list item -->
-
+                            </article>
+                        </div>
+                    {% empty %}
+                        <p>No sermons available.</p>
+                    {% endfor %}
+                </div>
+                <!-- Pagination -->
+                <div class="pagination">
+                    {% if sermons.has_other_pages %}
+                        <ul class="pagination">
+                            {% if sermons.has_previous %}
+                                <li><a href="?page=1">&laquo; First</a></li>
+                                <li><a href="?page={{ sermons.previous_page_number }}">Previous</a></li>
+                            {% endif %}
+                            <li class="current">Page {{ sermons.number }} of {{ sermons.paginator.num_pages }}</li>
+                            {% if sermons.has_next %}
+                                <li><a href="?page={{ sermons.next_page_number }}">Next</a></li>
+                                <li><a href="?page={{ sermons.paginator.num_pages }}">Last &raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
-
         </section>
-        <!-- /Blog Posts Section -->
     </div>
-
-
-{% endblock %}
-
-{% block extra_js %}
-
 {% endblock %}

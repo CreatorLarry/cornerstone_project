@@ -1,23 +1,7 @@
 {% extends 'dashboard_master.html' %}
-{% load static %}
 
 {% block title %}
-<title>Church Members</title>
-{% endblock %}
-
-{% block extra_css %}
-<!-- Custom styles for this page -->
-<link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet' %}">
-{% endblock %}
-
-
-{% block extra_js %}
-<!-- Page level plugins -->
-<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+    <title>Church Members</title>
 {% endblock %}
 
 {% block content %}
@@ -38,13 +22,15 @@
                 <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Gender</th>
                 <th>Email</th>
+                <th>Phone</th>
                 <th>Joining Date</th>
                 <th>Department</th>
-                <th>Delete</th>
-                <th>Details</th>
-                <th>Deposit</th>
-                <th>Update</th>
+{#                <th>Delete</th>#}
+{#                <th>Details</th>#}
+{#                <th>Deposit</th>#}
+{#                <th>Update</th>#}
             </tr>
                 </thead>
                 <tfoot>
@@ -52,13 +38,15 @@
                 <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Gender</th>
                 <th>Email</th>
+                <th>Phone</th>
                 <th>Joining Date</th>
                 <th>Department</th>
-                <th>Delete</th>
-                <th>Details</th>
-                <th>Deposit</th>
-                <th>Update</th>
+{#                <th>Delete</th>#}
+{#                <th>Details</th>#}
+{#                <th>Deposit</th>#}
+{#                <th>Update</th>#}
             </tr>
                 </tfoot>
                 <tbody>
@@ -66,51 +54,53 @@
                 <tr>
                     <td>{{ member.id }}</td>
                     <td>{{ member.first_name }}</td>
-                    <td>{{ member.last_name }}</td>
+                    <td>{{ member.second_name }}</td>
+                    <td>{{ member.gender }}</td>
                     <td>{{ member.email }}</td>
-                    <td>{{ member.created_at | date:"d-m-Y" }}</td>
+                    <td>{{ member.phone }}</td>
+                    <td>{{ member.date_joined | date:"d-m-Y" }}</td>
                     <td>{{ member.department}}</td>
 
-                    {% if perms.church.delete_member %}
-                        <td>
-                            <a class="btn btn-danger btn-sm" href="{% url 'delete_member' member.id %}">Remove</a>
-                        </td>
-                    {% else %}
-                       <td>
-                           <button class="btn btn-sm disabled">Action</button>
-                       </td>
-                    {% endif %}
-
-                    {% if perms.church.view_member %}
-                        <td>
-                            <a class="btn btn-info btn-sm" href="{% url 'member_details' member.id %}">Details</a>
-                        </td>
-                    {% else %}
-                       <td>
-                           <button class="btn btn-sm disabled">Action</button>
-                       </td>
-                    {% endif %}
-
-                    {% if perms.church.add_deposit %}
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="{% url 'deposit' member.id %}">Deposit</a>
-                        </td>
-                    {% else %}
-                       <td>
-                           <button class="btn btn-sm disabled">Action</button>
-                       </td>
-                    {% endif %}
-
-                    {% if perms.church.change_member %}
-                        <td>
-                            <a class="btn btn-secondary btn-sm"
-                               href="{% url 'update_member' member.id %}">Update</a>
-                        </td>
-                    {% else %}
-                       <td>
-                           <button class="btn btn-sm disabled">Action</button>
-                       </td>
-                    {% endif %}
+{#                    {% if perms.church.delete_member %}#}
+{#                        <td>#}
+{#                            <a class="btn btn-danger btn-sm" href="{% url 'delete_member' member.id %}">Remove</a>#}
+{#                        </td>#}
+{#                    {% else %}#}
+{#                       <td>#}
+{#                           <button class="btn btn-sm disabled">Action</button>#}
+{#                       </td>#}
+{#                    {% endif %}#}
+{##}
+{#                    {% if perms.church.view_member %}#}
+{#                        <td>#}
+{#                            <a class="btn btn-info btn-sm" href="{% url 'member_details' member.id %}">Details</a>#}
+{#                        </td>#}
+{#                    {% else %}#}
+{#                       <td>#}
+{#                           <button class="btn btn-sm disabled">Action</button>#}
+{#                       </td>#}
+{#                    {% endif %}#}
+{##}
+{#                    {% if perms.church.add_deposit %}#}
+{#                        <td>#}
+{#                            <a class="btn btn-primary btn-sm" href="{% url 'deposit' member.id %}">Deposit</a>#}
+{#                        </td>#}
+{#                    {% else %}#}
+{#                       <td>#}
+{#                           <button class="btn btn-sm disabled">Action</button>#}
+{#                       </td>#}
+{#                    {% endif %}#}
+{##}
+{#                    {% if perms.church.change_member %}#}
+{#                        <td>#}
+{#                            <a class="btn btn-secondary btn-sm"#}
+{#                               href="{% url 'update_member' member.id %}">Update</a>#}
+{#                        </td>#}
+{#                    {% else %}#}
+{#                       <td>#}
+{#                           <button class="btn btn-sm disabled">Action</button>#}
+{#                       </td>#}
+{#                    {% endif %}#}
                 </tr>
             {% endfor %}
                 </tbody>
@@ -119,8 +109,3 @@
     </div>
 </div>
 {% endblock %}
-
-{% static '' %}
-
-
-

@@ -14,12 +14,13 @@
     <div class="card shadow mb-4">
         <div class="card-body text-center">
             {% if member.profile_pic %}
-                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle"
+                <img src="{{ member.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle"
                      width="150">
             {% else %}
                 <img class="img-fluid mx-auto d-block profile"
                      src="{% static 'dashboard_assets/img/undraw_profile.svg' %}" alt="profile_picture" width="150">
             {% endif %}
+
             <h4 class="mt-2">{{ user.first_name }} {{ user.second_name }}</h4>
             <p>{{ user.email }}</p>
         </div>
@@ -32,6 +33,7 @@
         </div>
         <div class="card-body">
             <p>Phone: {{ user.phone }}</p>
+            <p>Email: {{ user.email }}</p>
             <p>Gender: {% if user.gender == "M" %}Male{% elif user.gender == "F" %}Female{% else %}Not
                 specified{% endif %}</p>
             <p>Date of Birth: {{ user.dob }}</p>

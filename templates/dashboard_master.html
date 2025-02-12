@@ -10,6 +10,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+
+
     <link rel="icon" href="{% static 'img/church_icon.ico' %}" type="image/x-icon">
 
     {% block title %}
@@ -80,8 +82,23 @@
                 <span>Update Profile</span></a>
         </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'deposit_form' %}">
+                <i class="fas fa-fw fa-money-bill-1-wave"></i>
+                <span>Monthly Registration</span></a>
+        </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'members' %}">
+                <i class="fas fa-fw fa-person-circle-plus"></i>
+                <span>Members</span></a>
+        </li>
 
 
         <!--        &lt;!&ndash; Nav Item - Pages Collapse Menu &ndash;&gt;-->
@@ -359,7 +376,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome {{ member.first_name }}.</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome {{ user.first_name }}.</span>
                             <img class="img-profile rounded-circle" alt="profile"
                                  src="{% static 'dashboard_assets/img/undraw_profile.svg' %}">
                         </a>

@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from main.models import Member
 
+from .models import Event, Blog, Sermon
+
 
 class MemberRegistrationForm(UserCreationForm):
     role = forms.ChoiceField(choices=[
@@ -54,3 +56,23 @@ class ProfileUpdateForm(forms.ModelForm):
                 ("clergy", "Clergy")
             ]),
         }
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'description', 'date', 'location', 'image']
+
+
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ['title', 'content', 'image']
+
+
+class SermonForm(forms.ModelForm):
+    class Meta:
+        model = Sermon
+        exclude = ['date']
+        fields = ['title', 'preacher', 'date', 'audio_file', 'video_url', 'description']
+

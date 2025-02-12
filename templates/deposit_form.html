@@ -2,23 +2,59 @@
 {% load crispy_forms_filters %}
 
 {% block title %}
-	 <title>Add Deposit</title>
+    <title>Add Deposit</title>
 {% endblock %}
 
 {% block content %}
-	<div class="container">
-       <div class="row justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
             <div class="col-sm-4 border px-3 py-3 mt-3">
-                <h3>Names : {{ member.first_name }} {{ member.last_name }}</h3>
-                <p>Email: {{ member.email }}</p>
-                <p>Joining Date:  {{ member.created_at | date:"d-m-Y" }}</p>
-
-                <form action="" method="post">
+                <form id="depositForm" method="post">
                     {% csrf_token %}
-                    {{ form | crispy }}
-                    <button class="btn btn-dark w-100">Save Deposit</button>
+                    <label>Department:</label>
+                    <select name="department" required>
+                        <option value="Mothers Union">Mothers Union</option>
+                        <option value="KAMA">KAMA</option>
+                        <option value="KAYO">KAYO</option>
+                    </select>
+
+                    <label for="amount">Amount (KES):</label>
+                    <input type="number" id="amount" name="amount" min="100" required>
+
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="07XXXXXXXX" required>
+
+                    <button type="submit">Deposit</button>
                 </form>
             </div>
-       </div>
+        </div>
     </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.getElementById('depositForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            let department = document.getElementById('department');
+            let paybill = department.options[department.selectedIndex].dataset.paybill;
+            let account = department.options[department.selectedIndex].dataset.account;
+            let amount = document.getElementById('amount').value;
+            let phone = document.getElementById('phone_number').value;
+
+            fetch("/process-deposit/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                },
+                body: JSON.stringify({
+                    "paybill": paybill,
+                    "account": account,
+                    "amount": amount,
+                    "phone": phone
+                })
+            }).then(response => response.json())
+                .then(data => alert(data.message));
+        });
+    </script>
 {% endblock %}

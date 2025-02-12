@@ -1,0 +1,50 @@
+{% extends 'dashboard_master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Update Profile</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Info Section -->
+    <div class="card shadow mb-4">
+        <div class="card-body text-center">
+            {% if member.profile_pic %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle"
+                     width="150">
+            {% else %}
+                <img class="img-fluid mx-auto d-block profile"
+                     src="{% static 'dashboard_assets/img/undraw_profile.svg' %}" alt="profile_picture" width="150">
+            {% endif %}
+            <h4 class="mt-2">{{ user.first_name }} {{ user.second_name }}</h4>
+            <p>{{ user.email }}</p>
+        </div>
+    </div>
+    <!-- End Info Section -->
+
+    <!-- Edit Profile Section -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <table>
+                <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Total Deposits</th>
+                    <th>Transactions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for department in department_totals %}
+                    <tr>
+                        <td>{{ department.account_number }}</td>
+                        <td>{{ department.total_amount }} KES</td>
+                        <td>{{ department.total_transactions }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'export_deposits' %}">Download CSV</a>
+
+        </div>
+    </div>
+{% endblock %}

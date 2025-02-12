@@ -2,6 +2,9 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, Permission, Group
 from django.db import models
 
+from django.conf import settings
+from django.template.defaultfilters import slugify
+
 
 # Create your models here.
 
@@ -65,17 +68,26 @@ class Member(AbstractBaseUser, PermissionsMixin):
 
 # Blog Model
 class Blog(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    author = models.ForeignKey(Member, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=100)
     category = models.CharField(max_length=100, choices=(
         ('announcement', 'Announcement'), ('testimony', 'Testimony'), ('devotional', 'Devotional'), ('news', 'News')),
                                 default='news')
     image = models.ImageField(upload_to='blogs', default='blogs/default.jpg')
+    summary = models.TextField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
+
+
 
 
 # Sermon Model
@@ -125,12 +137,24 @@ class Deposit(models.Model):
 
     payment_method = models.CharField(max_length=100, choices=PAYMENT_METHOD_CHOICES, default='Mobile Money')
     amount = models.IntegerField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Paid')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='deposits')
     date_paid = models.DateTimeField(auto_now_add=True)
+    paybill_number = models.CharField(max_length=20, blank=True, null=True)  # Stores department Paybill
+    account_number = models.CharField(max_length=50, blank=True, null=True)  # Stores department Account No
+    transaction_id = models.CharField(max_length=100, unique=True, blank=True, null=True)  # STK Push Transaction ID
 
     def __str__(self):
-        return f"{self.member.first_name} - {self.amount} KES on {self.date_paid}"
+        return f"{self.member.first_name} - {self.amount} KES - {self.status}"
 
     class Meta:
         db_table = 'deposits'
+
+
+class EventRegistration(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    registered_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.event.title}"
