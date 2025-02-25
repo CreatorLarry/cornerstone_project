@@ -70,18 +70,18 @@
                 <li class="dropdown"><a href="{% url 'departments' %}"><span>DEPARTMENTS</span> <i
                         class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="{% url 'department-info' %}">CHILDREN</a></li>
-                        <li><a href="">YOUTH</a></li>
-                        <li><a href="">MOTHERS' UNION</a></li>
-                        <li><a href="">KAMA</a></li>
+                        <li><a href="{% url 'children-department' %}">CHILDREN</a></li>
+                        <li><a href="{% url 'kayo-department' %}">YOUTH</a></li>
+                        <li><a href="{% url 'mu-department' %}">MOTHERS' UNION</a></li>
+                        <li><a href="{% url 'kama-department' %}">KAMA</a></li>
                     </ul>
                 </li>
                 <li><a href="{% url 'contact' %}">CONTACT</a></li>
-                <li class="dropdown"><a href="{% url 'login' %}"><span>MEMBER?</span> <i
+                <li class="dropdown"><a href="{% url 'login' %}" target="_blank"><span>MEMBER?</span> <i
                         class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="{% url 'login' %}">LOGIN</a></li>
-                        <li><a href="{% url 'new-member-registration' %}">REGISTER</a></li>
+                        <li><a href="{% url 'login' %}" target="_blank">LOGIN</a></li>
+                        <li><a href="{% url 'new-member-registration' %}" target="_blank">REGISTER</a></li>
                     </ul>
                 </li>
             </ul>

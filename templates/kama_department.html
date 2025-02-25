@@ -1,0 +1,207 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>KAMA Department</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title accent-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">KAMA Department</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'departments' %}">Department</a></li>
+                        <li class="current">KAMA Department</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <!-- Blog Details Section -->
+                    <section id="blog-details" class="blog-details section">
+                        <div class="container">
+
+                            <article class="article">
+
+                                <div class="post-img">
+                                    <img src="{% static 'img/kama.png' %}" alt="" class="img-fluid">
+                                </div>
+
+                                <h2 class="title">KAMA(Kenya Anglican Men's Association)</h2>
+
+                                <div class="meta-top">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                                href="blog-details.html">Rev John Kibicho</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
+                                                href="blog-details.html">
+                                            <time datetime="2020-01-01">Jan 25, 2025</time>
+                                        </a></li>
+                                    </ul>
+                                </div><!-- End meta top -->
+
+                                <div class="content">
+                                    <p>
+                                        KAMA at St. Andrews Cathedral Thika is a fellowship of men dedicated to
+                                        spiritual growth, service, and mutual support. We strive to strengthen our
+                                        faith, build strong families, and contribute positively to our community. We
+                                        believe in the power of men working together for the betterment of the church
+                                        and society.
+                                    </p>
+
+                                    <p>
+                                        We engage in a variety of activities, including Bible studies, prayer meetings,
+                                        retreats, and community outreach projects. KAMA provides a forum for men to
+                                        discuss issues facing families and the community, and to find solutions grounded
+                                        in Christian principles.
+                                    </p>
+
+                                    <blockquote>
+                                        <p>
+                                            "Iron sharpens iron, and one man sharpens another." - Proverbs 27:17
+                                        </p>
+                                    </blockquote>
+
+                                    <p>
+                                        We are committed to fostering a brotherhood where men can find encouragement,
+                                        accountability, and support in their journey of faith. We actively participate
+                                        in church services and leadership roles, promoting Christian values and
+                                        responsible manhood.
+                                        Our goal is to empower men to become strong spiritual leaders in their homes,
+                                        their church, and their community.
+                                    </p>
+
+                                    <h3>Building Men of God</h3>
+                                    <p>
+                                        KAMA at St. Andrews is a place where men can connect with other men, share their
+                                        experiences, and grow in their relationship with God. We believe in the
+                                        importance of male mentorship and discipleship, and we strive to create
+                                        opportunities for men to learn and grow together.
+                                        We encourage all men to join us and experience the fellowship and support of
+                                        KAMA.
+                                        Through service, study, and prayer, we seek to live out our faith and make a
+                                        positive impact on the world around us.
+                                    </p>
+                                    <img src="{% static 'img/blog/blog-inside-post.jpg' %}" class="img-fluid" alt="">
+
+                                    <h3>Join the KAMA Brotherhood</h3>
+                                    <p>
+                                        We meet regularly for fellowship, Bible study, and service projects. We also
+                                        participate in diocesan and national KAMA events.
+                                        We invite you to join us and discover the many ways you can contribute to the
+                                        life of the church and the community.
+                                        Whether you are a seasoned Christian or just beginning your faith journey, KAMA
+                                        welcomes you.
+                                    </p>
+                                    <p>
+                                        Come and be part of a supportive and faith-filled community of men. We look
+                                        forward to welcoming you!
+                                    </p>
+
+                                </div>
+
+                                <div class="meta-bottom">
+                                    <i class="bi bi-folder"></i>
+                                    <ul class="cats">
+                                        <li><a href="#">Pictorial Folder</a></li>
+                                    </ul>
+
+                                    <i class="bi bi-tags"></i>
+                                    <ul class="tags">
+                                        <li>Youthful</li>
+                                        <li>Fun</li>
+                                        <li>Relatable</li>
+                                    </ul>
+                                </div><!-- End meta bottom -->
+
+                            </article>
+
+                        </div>
+                    </section><!-- /Blog Details Section -->
+
+                </div>
+
+                <div class="col-lg-4 sidebar">
+
+                    <div class="widgets-container">
+
+                        <!-- Patron Widget -->
+                        <div class="blog-author-widget widget-item">
+                            <div class="d-flex flex-column align-items-center">
+                                <img src="{% static 'img/blog/blog-author.jpg' %}" class="rounded-circle flex-shrink-0"
+                                     alt="">
+                                <h4>Jane Smith</h4>
+                                <span class="text-primary font-weight-bold">Patron</span>
+                                <div class="social-links">
+                                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
+                                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                                    <a href="https://instagram.com/#"><i class="bi bi-instagram"></i></a>
+                                    <a href="https://linkedin.com/#"><i class="bi bi-linkedin"></i></a>
+                                </div>
+                                <p class="text-center">
+                                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus
+                                    accusantium.
+                                </p>
+                            </div>
+                        </div><!-- /Patron Widget -->
+
+                        <!-- Departmental Leaders Widget -->
+                        <div class="leaders-widget widget-item mt-4">
+                            <h5 class="widget-title text-center">Departmental Leaders</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/chairman.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>John Doe</strong>
+                                        <br><span class="text-muted">Chairman</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/secretary.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>Mary Johnson</strong>
+                                        <br><span class="text-muted">Secretary</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/treasurer.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>James Brown</strong>
+                                        <br><span class="text-muted">Treasurer</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!-- /Departmental Leaders Widget -->
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

@@ -1,14 +1,14 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from main.models import Member
+from main.models import Member, ContactMessage
 
 from .models import Event, Blog, Sermon, Comment
 
 
 class MemberRegistrationForm(UserCreationForm):
-    role = forms.ChoiceField(choices=[
-        ('member', 'Member'), ('leader', 'Leader'), ('pastor', 'Pastor'), ('admin', 'Admin')], required=True
-    )
+    # role = forms.ChoiceField(choices=[
+    #     ('member', 'Member'), ('leader', 'Leader'), ('pastor', 'Pastor'), ('admin', 'Admin')], required=True
+    # )
     phone = forms.CharField(
         max_length=15,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Phone Number'}),
@@ -19,7 +19,7 @@ class MemberRegistrationForm(UserCreationForm):
     class Meta:
         model = Member
         fields = ['first_name', 'second_name', 'other_name', 'email', 'phone', 'profile_picture',
-                  'gender', 'dob', 'bio', 'department', 'role', 'password1', 'password2']
+                  'gender', 'dob', 'bio', 'department', 'password1', 'password2']
 
 
 class MemberLoginForm(forms.Form):
@@ -39,7 +39,7 @@ class ProfileUpdateForm(forms.ModelForm):
             "dob",
             "email",
             "department",
-            "role",
+            # "role",
             "profile_picture",
         ]
         widgets = {
@@ -51,11 +51,11 @@ class ProfileUpdateForm(forms.ModelForm):
                 ("kama", "KAMA"),
                 ("children", "Children's")
             ]),
-            "role": forms.Select(choices=[
-                ("member", "Member"),
-                ("leader", "Leader"),
-                ("clergy", "Clergy")
-            ]),
+            # "role": forms.Select(choices=[
+            #     ("member", "Member"),
+            #     ("leader", "Leader"),
+            #     ("clergy", "Clergy")
+            # ]),
         }
 
 
@@ -82,3 +82,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["name", "email", "content"]
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ["name", "email", "subject"]

@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from main import views
+from main.views import custom_logout
 
 urlpatterns = [
                   path('', views.home, name='home'),
@@ -48,9 +49,12 @@ urlpatterns = [
 
                   path('departments/', views.departments, name='departments'),
 
-                  path('departments/department-info', views.department_info, name='department-info'),
+                  path('departments/kayo-department', views.kayo_department, name='kayo-department'),
+                  path('departments/kama-department', views.kama_department, name='kama-department'),
+                  path('departments/mu-department', views.mu_department, name='mu-department'),
+                  path('departments/children-department', views.children_department, name='children-department'),
 
-                  path('contact/', views.contact, name='contact'),
+                  path('contact/', views.contact_view, name='contact'),
 
                   path('login/', views.login_member, name='login'),
 
@@ -101,6 +105,8 @@ urlpatterns = [
                   path("blogs/add-comment", views.add_comment, name="add_comment"),
 
                   path("sermons/upload/", views.upload_sermon, name="upload_sermon"),
+
+                  path("admin/logout/", custom_logout, name="custom_logout"),
 
                   path('admin/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

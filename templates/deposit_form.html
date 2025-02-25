@@ -6,55 +6,89 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-sm-4 border px-3 py-3 mt-3">
-                <form id="depositForm" method="post">
-                    {% csrf_token %}
-                    <label>Department:</label>
-                    <select name="department" required>
-                        <option value="Mothers Union">Mothers Union</option>
-                        <option value="KAMA">KAMA</option>
-                        <option value="KAYO">KAYO</option>
-                    </select>
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h4 class="text-center mb-3">Make a Deposit</h4>
+                        <form id="depositForm" method="post" action="{% url 'deposit_form' %}">
+                            {% csrf_token %}
 
-                    <label for="amount">Amount (KES):</label>
-                    <input type="number" id="amount" name="amount" min="100" required>
+                            <div class="mb-3">
+                                <label class="form-label">Department:</label>
+                                <select name="department" class="form-select" required>
+                                    <option value="Mothers Union">Mothers Union</option>
+                                    <option value="KAMA">KAMA</option>
+                                    <option value="KAYO">KAYO</option>
+                                </select>
+                            </div>
 
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="text" id="phone_number" name="phone_number" placeholder="07XXXXXXXX" required>
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">Amount (KES):</label>
+                                <input type="number" id="amount" name="amount" class="form-control" min="100" required>
+                            </div>
 
-                    <button type="submit">Deposit</button>
-                </form>
+                            <div class="mb-3">
+                                <label for="phone_number" class="form-label">Phone Number:</label>
+                                <input type="text" id="phone_number" name="phone_number" class="form-control"
+                                       placeholder="07XXXXXXXX" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Deposit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 {% block extra_js %}
     <script>
-        document.getElementById('depositForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            let department = document.getElementById('department');
-            let paybill = department.options[department.selectedIndex].dataset.paybill;
-            let account = department.options[department.selectedIndex].dataset.account;
-            let amount = document.getElementById('amount').value;
-            let phone = document.getElementById('phone_number').value;
+        $(document).ready(function () {
+            $("#depositForm").submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
 
-            fetch("/process-deposit/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
-                },
-                body: JSON.stringify({
-                    "paybill": paybill,
-                    "account": account,
-                    "amount": amount,
-                    "phone": phone
-                })
-            }).then(response => response.json())
-                .then(data => alert(data.message));
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'deposit_form' %}",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#depositForm")[0].reset(); // Reset form
+                            showAlert("success", response.message);
+                        } else {
+                            showAlert("danger", response.message);
+                        }
+                    },
+                    error: function () {
+                        showAlert("danger", "Something went wrong. Try again.");
+                    }
+                });
+            });
+
+            function showAlert(type, message) {
+                let alertBox = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`;
+                $(".container").prepend(alertBox); // Insert alert at the top
+            }
         });
     </script>
+
+
 {% endblock %}

@@ -19,7 +19,7 @@
                     <ol>
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'events' %}">Events</a></li>
-                        <li class="current">{{ event.title }}</li>
+                        <li class="current">Event Details</li>
                     </ol>
                 </nav>
             </div>
@@ -29,6 +29,13 @@
         <!-- Event Details Section -->
         <section id="blog-details" class="blog-details section">
             <div class="container">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'warning' %}warning{% else %}success{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <div class="row">
                     <div class="col-lg-8">
                         <article class="article">
@@ -40,10 +47,10 @@
                             <h2>{{ events.title }}</h2>
 
                             <div class="meta-top">
-                                    <p><strong>Date:</strong> {{ events.date }}</p>
-                                    <p><strong>Time:</strong> {{ events.time }}</p>
-                                    <p><strong>Location:</strong> {{ events.location }}</p>
-                                    <p><strong>Organizer:</strong> {{ events.organizer }}</p>
+                                <p><strong>Date:</strong> {{ events.date }}</p>
+                                {#                                    <p><strong>Time:</strong> {{ events.time }}</p>#}
+                                <p><strong>Location:</strong> {{ events.location }}</p>
+                                <p><strong>Organizer:</strong> {{ events.organizer }}</p>
                             </div><!-- End meta top -->
 
                             <div class="content">
@@ -55,19 +62,19 @@
 
                     <div class="col-lg-4 sidebar">
                         <div class="widgets-container">
-                            <div class="card p-3">
+                            <div class="card p-3 custom-contact-form">
                                 <h3 class="mb-3">Register for this Event</h3>
-                                    <form method="post" action="{% url 'register_event' events.id %}">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Your Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Register</button>
+                                <form method="post" action="{% url 'register_event' events.id %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Your Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Register</button>
                                 </form>
                             </div>
                         </div>

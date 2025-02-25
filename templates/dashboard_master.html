@@ -11,11 +11,10 @@
     <meta name="author" content="">
 
 
-
     <link rel="icon" href="{% static 'img/church_icon.ico' %}" type="image/x-icon">
 
     {% block title %}
-        <title>Library Management System</title>
+        <title>Ack Member Dashboard</title>
     {% endblock %}
 
 
@@ -27,6 +26,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'dashboard_assets/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     {% block extra_css %}
 
     {% endblock %}
@@ -42,7 +43,7 @@
     <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'member_dashboard' %}">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-church"></i>
             </div>
@@ -475,6 +476,8 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="{% static 'dashboard_assets/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'dashboard_assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
@@ -483,6 +486,8 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{% static 'dashboard_assets/js/sb-admin-2.min.js' %}"></script>
+
+
 
 
 {% block extra_js %}

@@ -10,7 +10,7 @@ from django.template.defaulttags import now
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 
-from .forms import CommentForm
+from .forms import CommentForm, ContactForm
 
 import base64
 from datetime import datetime
@@ -21,7 +21,7 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
-from main.models import Member
+from main.models import Member, ContactMessage
 
 User = get_user_model()
 
@@ -42,6 +42,10 @@ from django.contrib import messages
 from .models import Event, EventRegistration, Blog, Sermon, Comment
 from .forms import EventForm, BlogForm, SermonForm
 from django.contrib.auth.decorators import login_required
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -105,8 +109,19 @@ def departments(request):
     return render(request, 'departments.html')
 
 
-def contact(request):
-    return render(request, 'contact.html')
+def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        if name and email and subject and message:
+            ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
+            messages.success(request, "Your message has been sent. Thank you!")
+            return redirect("contact")  # Prevents duplicate submissions on refresh
+
+    return render(request, "contact.html")
 
 
 def department_info(request):
@@ -118,7 +133,7 @@ def new_member_registration(request):
         form = MemberRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             member = form.save(commit=False)  # Don't save yet, modify first
-            member.role = form.cleaned_data['role']
+            # member.role = form.cleaned_data['role']
             member.first_name = form.cleaned_data['first_name']
             member.second_name = form.cleaned_data['second_name']
             member.other_name = form.cleaned_data['other_name']
@@ -272,26 +287,22 @@ def initiate_stk_push(request):
     if request.method == "POST":
         amount = request.POST.get("amount")
         department = request.POST.get("department")
-        phone_number = request.user.phone  # Ensure phone_number is valid
+        phone_number = request.user.member.phone  # Ensure correct phone field
 
         # Validate inputs
-        if not amount or not department:
-            messages.error(request, "Invalid input. Amount and Department are required.")
+        if not amount or not department or not phone_number:
+            messages.error(request, "Invalid input. Ensure all fields are filled.")
             return redirect("deposit_form")
 
-        # Get department's Paybill info
+        # Get department paybill info
         paybill_info = DEPARTMENT_PAYBILLS.get(department, {})
-        paybill_number = paybill_info.get("paybill", "")
-        account_number = paybill_info.get("account_number", "")
+        paybill_number = paybill_info.get("paybill", settings.MPESA_EXPRESS_SHORTCODE)  # Use default if missing
+        account_number = paybill_info.get("account_number", "ChurchDeposit")
 
-        if not paybill_number or not account_number:
-            messages.error(request, "Invalid department selected.")
-            return redirect("deposit_form")
-
-        # Generate Timestamp and Password
+        # Generate Timestamp & Password
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        password_str = f"{paybill_number}{settings.MPESA_PASSKEY}{timestamp}"
-        password = base64.b64encode(password_str.encode()).decode()
+        password = base64.b64encode(
+            f"{settings.MPESA_EXPRESS_SHORTCODE}{settings.MPESA_PASSKEY}{timestamp}".encode()).decode()
 
         # Get M-Pesa Access Token
         access_token = get_access_token()
@@ -299,33 +310,33 @@ def initiate_stk_push(request):
             messages.error(request, "Failed to get M-Pesa access token.")
             return redirect("deposit_form")
 
-        # Construct STK Push Payload
+        # STK Push Payload
         url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
         headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
 
         payload = {
-            "BusinessShortCode": paybill_number,
+            "BusinessShortCode": settings.MPESA_EXPRESS_SHORTCODE,
             "Password": password,
             "Timestamp": timestamp,
             "TransactionType": "CustomerPayBillOnline",
             "Amount": int(amount),
             "PartyA": phone_number,
-            "PartyB": paybill_number,
+            "PartyB": settings.MPESA_EXPRESS_SHORTCODE,
             "PhoneNumber": phone_number,
-            "CallBackURL": "https://yourdomain.com/mpesa/callback/",
+            "CallBackURL": "https://82f6-102-219-208-154.ngrok-free.app",
             "AccountReference": account_number,
-            "TransactionDesc": "Member Deposit"
+            "TransactionDesc": "Church Member Deposit"
         }
 
         # Send STK Push Request
         response = requests.post(url, json=payload, headers=headers)
         response_data = response.json()
-        print(response_data)  # Debugging
+        print("STK Response:", response_data)  # Debugging
 
         if response_data.get("ResponseCode") == "0":
             transaction_id = response_data.get("CheckoutRequestID")
 
-            # Save deposit as "Pending"
+            # Save deposit
             Deposit.objects.create(
                 member=request.user.member,
                 amount=amount,
@@ -334,11 +345,29 @@ def initiate_stk_push(request):
                 account_number=account_number,
                 transaction_id=transaction_id
             )
-            messages.success(request, "M-Pesa payment request sent! Please check your phone.")
+            messages.success(request, "M-Pesa request sent! Check your phone.")
         else:
             messages.error(request, "Failed to send M-Pesa request. Try again.")
 
         return redirect("deposit_form")
+
+
+def get_access_token():
+    url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    headers = {
+        "Authorization": "Basic " + base64.b64encode(
+            f"{settings.MPESA_CONSUMER_KEY}:{settings.MPESA_CONSUMER_SECRET}".encode()
+        ).decode()
+    }
+
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+
+    if "access_token" in response_data:
+        return response_data["access_token"]
+
+    print("Failed to get access token:", response_data)  # Debugging
+    return None
 
 
 @login_required
@@ -346,32 +375,45 @@ def initiate_stk_push(request):
 def mpesa_callback(request):
     try:
         data = json.loads(request.body)
-        print(data)  # Debugging
+        logger.info(f"MPESA CALLBACK DATA: {data}")  # Log full callback data
 
         result_code = data["Body"]["stkCallback"]["ResultCode"]
-        transaction_id = data["Body"]["stkCallback"].get("MpesaReceiptNumber", None)
+        transaction_id = data["Body"]["stkCallback"].get("MpesaReceiptNumber") or data["Body"]["stkCallback"][
+            "CheckoutRequestID"]
         checkout_id = data["Body"]["stkCallback"]["CheckoutRequestID"]
+
+        logger.info(f"Result Code: {result_code}, Transaction ID: {transaction_id}, Checkout ID: {checkout_id}")
 
         if result_code == 0 and transaction_id:
             deposit = Deposit.objects.get(transaction_id=checkout_id)
             deposit.status = "Paid"
             deposit.save()
+            logger.info(f"Deposit {deposit.id} marked as Paid")
 
-            # Send SMS Notification
             send_sms_notification(deposit.member.phone, deposit.amount, transaction_id)
-
             return JsonResponse({"message": "Payment successful"}, status=200)
-        else:
-            return JsonResponse({"message": "Payment failed"}, status=400)
+
+        logger.warning("Payment failed or declined")
+        return JsonResponse({"message": "Payment failed"}, status=400)
 
     except Exception as e:
-        print("Callback Error:", str(e))  # Debugging
+        logger.error(f"Callback Error: {str(e)}")
         return JsonResponse({"error": "Invalid request"}, status=400)
 
 
 @login_required
 def deposit_form(request):
-    return render(request, 'deposit_form.html')
+    if request.method == "POST":
+        department = request.POST.get("department")
+        amount = request.POST.get("amount")
+        phone_number = request.POST.get("phone_number")
+
+        if department and amount and phone_number:
+            return JsonResponse({"success": True, "message": "Deposit request sent successfully! Check your phone for a prompt."})
+        else:
+            return JsonResponse({"success": False, "message": "Error processing deposit. Please try again."})
+
+    return render(request, "deposit_form.html")
 
 
 @login_required
@@ -420,12 +462,26 @@ def register_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
     if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
 
-        # Create and save registration
-        registration = EventRegistration.objects.create(event=event, email=email)
-        registration.save()
+        if not name:
+            messages.error(request, "Name is required.")
+            return redirect("event-details", event_id=event.id)
+
+        if not email:
+            messages.error(request, "Email is required.")
+            return redirect("event-details", event_id=event.id)
+
+        # Check if the email is already registered for this event
+        existing_registration = EventRegistration.objects.filter(event=event, email=email).exists()
+
+        if existing_registration:
+            messages.warning(request, "You have already registered for this event.")
+        else:
+            # Create and save registration
+            EventRegistration.objects.create(event=event, name=name, email=email)
+            messages.success(request, "Registration successful!")
 
         return redirect("event-details", event_id=event.id)  # Redirect to event details
 
@@ -478,3 +534,24 @@ def add_comment(request, slug):
             )
 
     return redirect("blog-detail", slug=blog.slug)
+
+
+def kayo_department(request):
+    return render(request, 'kayo_department.html')
+
+
+def kama_department(request):
+    return render(request, 'kama_department.html')
+
+
+def mu_department(request):
+    return render(request, 'mu_department.html')
+
+
+def children_department(request):
+    return render(request, 'children_department.html')
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect("/admin/login/")

@@ -33,7 +33,7 @@ AUTH_USER_MODEL = 'main.Member'
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,6 +55,83 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+JAZZMIN_SETTINGS = {
+    # ✅ BRANDING SETTINGS
+    "site_title": "Cornerstone Admin",
+    "site_header": "Cornerstone Dashboard",
+    "site_brand": "Cornerstone",
+    "site_logo": "img/logo_two.png",  # Adjust this to your logo path (optional)
+    "login_logo": "img/logo_two.png",
+    "welcome_sign": "Welcome to Cornerstone Admin",
+    "copyright": "© 2025 Cornerstone Church",
+
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Users", "url": "admin:auth_user_changelist", "permissions": ["auth.view_user"]},
+        {"name": "Logout", "url": "custom_logout", "permissions": ["auth.view_user"]},
+    ],
+
+    # ✅ CUSTOM LINKS ON OBJECT PAGES
+    "related_modal_active": True,  # Enables pop-up modals for related fields
+    "custom_links": {
+        "main_event": [
+            {
+                "name": "View Registrations",
+                "url": "admin:main_eventregistrations_changelist",
+                "icon": "fas fa-users",
+                "permissions": ["main.view_eventregistration"],
+            }
+        ]
+    },
+
+    # ✅ SIDEBAR MENU ORGANIZATION
+    "order_with_respect_to": [
+        "auth", "main_event", "main_sermon", "main_blog",
+    ],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "main_event": "fas fa-calendar-check",
+        "main_sermon": "fas fa-bible",
+        "main_blog": "fas fa-newspaper",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # ✅ USER & PERMISSIONS MANAGEMENT
+    "show_ui_builder": True,
+    "user_avatar": "profile.image",
+    "custom_css": None,
+    "custom_js": None,
+    "related_modal_active": True,
+    "use_google_fonts_cdn": True,
+    "show_sidebar": True,
+
+    # ✅ ACTION BUTTONS & TOOLS
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {"auth.user": "collapsible"},
+
+    # ✅ PERMISSIONS & AUTH VISIBILITY
+    "hide_models": [],
+    "show_models": ["auth.user", "auth.group"],
+
+    # ✅ THEME SETTINGS
+    "theme": "darkly",  # Try: simplex, flatly, darkly, lumen, sandstone
+    "custom_css": None,
+    "custom_js": None,
+}
+
+# Jazzmin UI Tweaks
+# JAZZMIN_UI_TWEAKS = {
+#     "navbar": "navbar-dark bg-primary",
+#     "sidebar": "sidebar-dark-primary",
+#     "actions_sticky_top": True,
+#     "theme": "darkly",
+# }
+
+
+LOGOUT_REDIRECT_URL = "/admin/login/"  # Redirect after logout
 
 
 ROOT_URLCONF = 'cornerstone_project.urls'
@@ -142,7 +219,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
-
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -157,7 +233,8 @@ MESSAGE_TAGS = {
 
 LOGIN_URL = 'login'
 
-MPESA_ENVIRONMENT = 'sandbox'
+MPESA_ENVIRONMENT = 'production'
+MPESA_API_URL = "https://api.safaricom.co.ke/"
 
 # Credentials for the daraja app
 

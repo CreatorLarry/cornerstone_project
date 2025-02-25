@@ -1,0 +1,209 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>MU Department</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title accent-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">MU Department</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'departments' %}">Department</a></li>
+                        <li class="current">MU Department</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <!-- Blog Details Section -->
+                    <section id="blog-details" class="blog-details section">
+                        <div class="container">
+
+                            <article class="article">
+
+                                <div class="post-img">
+                                    <img src="{% static 'img/mu.png' %}" alt="" class="img-fluid">
+                                </div>
+
+                                <h2 class="title">Welcome to Mothers' Union</h2>
+
+                                <div class="meta-top">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                                href="blog-details.html">Rev Mary Anna</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
+                                                href="blog-details.html">
+                                            <time datetime="2020-01-01">Jan 30, 2025</time>
+                                        </a></li>
+                                    </ul>
+                                </div><!-- End meta top -->
+
+                                <div class="content">
+                                    <p>
+                                        The Mothers' Union at St. Andrews Cathedral Thika is a vibrant organization of
+                                        women dedicated to supporting families, promoting Christian values, and serving
+                                        the community. We are a diverse group of women united by our shared commitment
+                                        to nurturing strong families and making a positive impact on the lives of
+                                        others.
+                                    </p>
+
+                                    <p>
+                                        We engage in a wide range of activities, including prayer meetings, Bible
+                                        studies, workshops on family life, and community outreach projects. The Mothers'
+                                        Union provides a supportive network for women to connect with one another, share
+                                        experiences, and grow in their faith.
+                                    </p>
+
+                                    <blockquote>
+                                        <p>
+                                            "She opens her mouth with wisdom, and the teaching of kindness is on her
+                                            tongue." - Proverbs 31:26
+                                        </p>
+                                    </blockquote>
+
+                                    <p>
+                                        We are committed to upholding the sanctity of marriage and family life,
+                                        promoting Christian education, and addressing the challenges facing women and
+                                        children in our community. We actively participate in church services and
+                                        support various initiatives aimed at improving the lives of families.
+                                        Our aim is to empower women to become strong pillars of their families and
+                                        agents of positive change in society.
+                                    </p>
+
+                                    <h3>Nurturing Families, Transforming Communities</h3>
+                                    <p>
+                                        The Mothers' Union at St. Andrews is a place where women can find friendship,
+                                        support, and opportunities for personal growth. We believe in the power of women
+                                        to make a difference, and we strive to equip our members with the skills and
+                                        resources they need to serve their families and their community effectively.
+                                        We encourage all women to join us and experience the fellowship and fulfillment
+                                        of belonging to the Mothers' Union.
+                                        Through prayer, service, and advocacy, we seek to live out our faith and make a
+                                        lasting impact on the world around us.
+                                    </p>
+                                    <img src="{% static 'img/blog/blog-inside-post.jpg' %}" class="img-fluid" alt="">
+
+                                    <h3>Join the Mothers' Union Family</h3>
+                                    <p>
+                                        We meet regularly for fellowship, prayer, and activities. We also participate in
+                                        diocesan and national Mothers' Union events.
+                                        We invite you to join us and discover the many ways you can contribute to the
+                                        well-being of families and the community.
+                                        Whether you are a mother, grandmother, or simply a woman who cares about
+                                        families, the Mothers' Union welcomes you.
+                                    </p>
+                                    <p>
+                                        Come and be part of a loving and supportive community of women. We look forward
+                                        to welcoming you!
+                                    </p>
+
+                                </div>
+                                <!-- End post content -->
+
+                                <div class="meta-bottom">
+                                    <i class="bi bi-folder"></i>
+                                    <ul class="cats">
+                                        <li><a href="#">Pictorial Folder</a></li>
+                                    </ul>
+
+                                    <i class="bi bi-tags"></i>
+                                    <ul class="tags">
+                                        <li>Engaging</li>
+                                        <li>Fun</li>
+                                        <li>Relatable</li>
+                                    </ul>
+                                </div><!-- End meta bottom -->
+
+                            </article>
+
+                        </div>
+                    </section><!-- /Blog Details Section -->
+
+                </div>
+
+                <div class="col-lg-4 sidebar">
+
+                    <div class="widgets-container">
+
+                        <!-- Patron Widget -->
+                        <div class="blog-author-widget widget-item">
+                            <div class="d-flex flex-column align-items-center">
+                                <img src="{% static 'img/blog/blog-author.jpg' %}" class="rounded-circle flex-shrink-0"
+                                     alt="">
+                                <h4>Jane Smith</h4>
+                                <span class="text-primary font-weight-bold">Patron</span>
+                                <div class="social-links">
+                                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
+                                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                                    <a href="https://instagram.com/#"><i class="bi bi-instagram"></i></a>
+                                    <a href="https://linkedin.com/#"><i class="bi bi-linkedin"></i></a>
+                                </div>
+                                <p class="text-center">
+                                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus
+                                    accusantium.
+                                </p>
+                            </div>
+                        </div><!-- /Patron Widget -->
+
+                        <!-- Departmental Leaders Widget -->
+                        <div class="leaders-widget widget-item mt-4">
+                            <h5 class="widget-title text-center">Departmental Leaders</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/chairman.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>John Doe</strong>
+                                        <br><span class="text-muted">Chairman</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/secretary.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>Mary Johnson</strong>
+                                        <br><span class="text-muted">Secretary</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/treasurer.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>James Brown</strong>
+                                        <br><span class="text-muted">Treasurer</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!-- /Departmental Leaders Widget -->
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

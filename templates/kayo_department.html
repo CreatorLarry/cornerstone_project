@@ -1,0 +1,209 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>KAYO Department</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title accent-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">KAYO Department</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'departments' %}">Department</a></li>
+                        <li class="current">KAYO Department</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <!-- Blog Details Section -->
+                    <section id="blog-details" class="blog-details section">
+                        <div class="container">
+
+                            <article class="article">
+
+                                <div class="post-img">
+                                    <img src="{% static 'img/kayo.png' %}" alt="" class="img-fluid">
+                                </div>
+
+                                <h2 class="title">Home For All Youths</h2>
+
+                                <div class="meta-top">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                                href="blog-details.html">Rev Antony Kuria</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
+                                                href="blog-details.html">
+                                            <time datetime="2020-01-01">Feb 1, 2025</time>
+                                        </a></li>
+                                    </ul>
+                                </div><!-- End meta top -->
+
+                                <div class="content">
+                                    <p>
+                                        KAYO at St. Andrews Cathedral Thika is a vibrant community of young people
+                                        seeking to grow in faith and service. We strive to empower youth through
+                                        spiritual development, leadership training, and community outreach. We believe
+                                        in nurturing talents and fostering a sense of belonging for all young Anglicans.
+                                    </p>
+
+                                    <p>
+                                        We engage in various activities, from Bible studies and prayer meetings to
+                                        sports, music, and drama. KAYO provides a platform for young people to explore
+                                        their faith, develop their gifts, and make a positive impact on the church and
+                                        the wider community.
+                                    </p>
+
+                                    <blockquote>
+                                        <p>
+                                            "Let no one despise you for your youth, but set an example for the believers
+                                            in speech, in conduct, in love, in faith and in purity." - 1 Timothy 4:12
+                                        </p>
+                                    </blockquote>
+
+                                    <p>
+                                        We are committed to fostering a supportive and inclusive environment where young
+                                        people can connect with God and with each other. We encourage active
+                                        participation in church services and community projects, promoting Christian
+                                        values and leadership.
+                                        Our aim is to equip young people with the skills and knowledge they need to
+                                        navigate the challenges of today and become responsible and faithful members of
+                                        society.
+                                    </p>
+
+                                    <h3>Empowering Youth for Christ</h3>
+                                    <p>
+                                        KAYO at St. Andrews is more than just a youth group; it's a family. We celebrate
+                                        our diversity and work together to build a strong foundation for the future of
+                                        the church. We believe in the potential of young people and strive to empower
+                                        them to become leaders in their communities.
+                                        We welcome all young people to join us and experience the joy of fellowship and
+                                        service.
+                                        Through mentorship, guidance, and spiritual nourishment, we help young people
+                                        discover their purpose and live fulfilling lives.
+                                    </p>
+                                    <img src="{% static 'img/blog/blog-inside-post.jpg' %}" class="img-fluid" alt="">
+
+                                    <h3>Join the KAYO Family</h3>
+                                    <p>
+                                        We meet regularly for fellowship, Bible study, and activities. We also
+                                        participate in various diocesan and national KAYO events.
+                                        We encourage you to get involved and discover the many opportunities available
+                                        to young people at St. Andrews.
+                                        Whether you are seeking spiritual growth, friendship, or a chance to make a
+                                        difference, KAYO has something to offer you.
+                                    </p>
+                                    <p>
+                                        Come and be part of a dynamic and faith-filled community. We look forward to
+                                        welcoming you!
+                                    </p>
+
+                                </div>
+                                <!-- End post content -->
+
+                                <div class="meta-bottom">
+                                    <i class="bi bi-folder"></i>
+                                    <ul class="cats">
+                                        <li><a href="#">Pictorial Folder</a></li>
+                                    </ul>
+
+                                    <i class="bi bi-tags"></i>
+                                    <ul class="tags">
+                                        <li>Youthful</li>
+                                        <li>Fun</li>
+                                        <li>Relatable</li>
+                                    </ul>
+                                </div><!-- End meta bottom -->
+
+                            </article>
+
+                        </div>
+                    </section><!-- /Blog Details Section -->
+
+                </div>
+
+                <div class="col-lg-4 sidebar">
+
+                    <div class="widgets-container">
+
+                        <!-- Patron Widget -->
+                        <div class="blog-author-widget widget-item">
+                            <div class="d-flex flex-column align-items-center">
+                                <img src="{% static 'img/blog/blog-author.jpg' %}" class="rounded-circle flex-shrink-0"
+                                     alt="">
+                                <h4>Jane Smith</h4>
+                                <span class="text-primary font-weight-bold">Patron</span>
+                                <div class="social-links">
+                                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
+                                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                                    <a href="https://instagram.com/#"><i class="bi bi-instagram"></i></a>
+                                    <a href="https://linkedin.com/#"><i class="bi bi-linkedin"></i></a>
+                                </div>
+                                <p class="text-center">
+                                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus
+                                    accusantium.
+                                </p>
+                            </div>
+                        </div><!-- /Patron Widget -->
+
+                        <!-- Departmental Leaders Widget -->
+                        <div class="leaders-widget widget-item mt-4">
+                            <h5 class="widget-title text-center">Departmental Leaders</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/chairman.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>John Doe</strong>
+                                        <br><span class="text-muted">Chairman</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/secretary.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>Mary Johnson</strong>
+                                        <br><span class="text-muted">Secretary</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <img src="{% static 'img/leaders/treasurer.jpg' %}" class="rounded-circle mr-3"
+                                         width="40" height="40" alt="">
+                                    <div>
+                                        <strong>James Brown</strong>
+                                        <br><span class="text-muted">Treasurer</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!-- /Departmental Leaders Widget -->
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

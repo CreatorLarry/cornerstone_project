@@ -29,10 +29,11 @@ class MemberManager(BaseUserManager):
 # Customer User Model
 class Member(AbstractBaseUser, PermissionsMixin):
     username = None
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     second_name = models.CharField(max_length=100)
     other_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=20, blank=True, null=True)
+    phone = models.CharField(max_length=15, unique=False, blank=True, null=True)
     role = models.CharField(max_length=100, choices=(
         ('member', 'Member'), ('leader', 'Leader'), ('pastor', 'Pastor'), ('admin', 'Admin')), default='member')
     email = models.EmailField(max_length=100, unique=True)
@@ -61,17 +62,17 @@ class Member(AbstractBaseUser, PermissionsMixin):
 
     objects = MemberManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'second_name', 'phone']
+    REQUIRED_FIELDS = ['first_name', 'second_name', 'phone_number']
 
     def __str__(self):
-        return f"{self.first_name} {self.second_name} ({self.role})"
+        return f"{self.first_name} {self.second_name}"
 
 
 # Blog Model
 class Blog(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.CharField(max_length=100)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='blog_pictures', null=True, blank=True)
@@ -105,8 +106,13 @@ class Sermon(models.Model):
 
 # Event Model
 class Event(models.Model):
+    CATEGORY_CHOICES = [
+        ('organizer', 'Department Organizer'),
+        ('weekly', 'Weekly Event'),
+        ('other', 'Other Event'),
+    ]
     title = models.CharField(max_length=100)
-    organizer = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
+    organizer = models.CharField(max_length=100, blank=True, null=True)
     registration_required = models.BooleanField(default=False)
     max_attendees = models.IntegerField(default=0)
     date = models.DateTimeField()
@@ -147,13 +153,16 @@ class Deposit(models.Model):
 
 
 class EventRegistration(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="registrations")
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, blank=True, null=True)
-    email = models.EmailField(unique=True, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
     registered_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} - {self.event.title}"
+
+    class Meta:
+        db_table = 'main_eventregistration'
 
 
 class Comment(models.Model):
@@ -165,3 +174,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.name} on {self.blog}"
+
+    from django.db import models
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
