@@ -2,53 +2,32 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.sites import requests
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models.aggregates import Sum
-from django.http import JsonResponse
-from django.template.defaulttags import now
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.timezone import now
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import CommentForm, ContactForm
+from main.models import Member, ContactMessage, EventRegistration, Event, Blog, Comment, Sermon
+from main.forms import MemberRegistrationForm, EventForm, BlogForm, SermonForm
 
-import base64
-from datetime import datetime
-
-from cornerstone_project import settings
+from .models import Deposit
 from .forms import ProfileUpdateForm
-import json
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-
-from main.models import Member, ContactMessage
 
 User = get_user_model()
 
-from django.shortcuts import render, redirect, get_object_or_404
-
-from main.forms import MemberRegistrationForm
-
-from .models import Deposit
-
-from .mpesa_auth import get_access_token
+import requests, base64, json, os
+from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
+from .mpesa_auth import get_access_token  # If you have it as a separate file
 from .constants import DEPARTMENT_PAYBILLS
-
+from cornerstone_project import settings
 from twilio.rest import Client
-import os
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Event, EventRegistration, Blog, Sermon, Comment
-from .forms import EventForm, BlogForm, SermonForm
-from django.contrib.auth.decorators import login_required
-
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
+# Basic views
 def home(request):
     return render(request, 'home.html')
 
@@ -69,44 +48,12 @@ def pictorial(request):
     return render(request, 'pictorial.html')
 
 
-def sermon(request):
-    sermons = Sermon.objects.all()
-    paginator = Paginator(sermons, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'sermon.html', {'sermons': sermons})
-
-
-def blog(request):
-    blogs = Blog.objects.all().order_by('-created_at')
-    paginator = Paginator(blogs, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return render(request, 'blog.html', {'page_obj': page_obj})
-
-
-def events(request):
-    events = Event.objects.all()
-    paginator = Paginator(events, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'events.html', {'events': events})
-
-
-def blog_detail(request, slug):
-    blog_post = get_object_or_404(Blog, slug=slug)
-    comments = Comment.objects.filter(blog=blog_post)
-    return render(request, 'blog-details.html', {'blog_post': blog_post, 'comments': comments})
-
-
-def event_details(request, event_id):
-    events = get_object_or_404(Event, id=event_id)
-    return render(request, 'events-details.html', {'events': events})
-
-
 def departments(request):
     return render(request, 'departments.html')
+
+
+def department_info(request):
+    return render(request, 'department-info.html')
 
 
 def contact_view(request):
@@ -119,38 +66,23 @@ def contact_view(request):
         if name and email and subject and message:
             ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
             messages.success(request, "Your message has been sent. Thank you!")
-            return redirect("contact")  # Prevents duplicate submissions on refresh
+            return redirect("contact")
 
     return render(request, "contact.html")
 
 
-def department_info(request):
-    return render(request, 'department-info.html')
-
-
+# Member Registration and Login/Logout
 def new_member_registration(request):
     if request.method == 'POST':
         form = MemberRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
-            member = form.save(commit=False)  # Don't save yet, modify first
-            # member.role = form.cleaned_data['role']
-            member.first_name = form.cleaned_data['first_name']
-            member.second_name = form.cleaned_data['second_name']
-            member.other_name = form.cleaned_data['other_name']
-            member.phone = form.cleaned_data['phone']
-            member.gender = form.cleaned_data['gender']
-            member.dob = form.cleaned_data['dob']
-            member.bio = form.cleaned_data['bio']
-            member.department = form.cleaned_data['department']
-            member.set_password(form.cleaned_data['password1'])  # Hash password
-            member.save()  # Now save to database
-
+            member = form.save(commit=False)
+            member.set_password(form.cleaned_data['password1'])
+            member.save()
             messages.success(request, 'Member Registration Successful. You can now Login')
             return redirect("login")
         else:
-            print(form.errors)
             messages.error(request, 'Registration Failed. Please check the form and try again.')
-
     else:
         form = MemberRegistrationForm()
     return render(request, 'new-member-registration.html', {"form": form})
@@ -160,20 +92,16 @@ def login_member(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-
         if not email or not password:
             messages.error(request, "Email and password are required.")
             return render(request, 'login.html')
-
         user = authenticate(request, email=email, password=password)
-
         if user is not None:
             login(request, user)
             messages.success(request, "Login successful! Welcome to your dashboard.")
             return redirect('member_dashboard')
         else:
             messages.error(request, "Invalid email or password. Please try again.")
-
     return render(request, 'login.html')
 
 
@@ -181,6 +109,7 @@ def login_member(request):
 def logout_member(request):
     logout(request)
     request.session.flush()
+    request.session.set_expiry(0)
     messages.success(request, 'You have logged out successfully')
     return redirect("login")
 
@@ -188,30 +117,28 @@ def logout_member(request):
 @login_required(login_url='login')
 def member_dashboard(request):
     deposits = Deposit.objects.filter(member=request.user)
-
     total_deposited = deposits.filter(status='Paid').aggregate(Sum('amount'))['amount__sum'] or 0
-    expected_total = 200 * 12 if request.user.department == 'Mothers Union' or request.user.department == 'KAMA' else 100 * 12
+    expected_total = 200 * 12 if request.user.department in ['Mothers Union', 'KAMA'] else 100 * 12
     balance = expected_total - total_deposited if expected_total > total_deposited else 0
-
-    # user = request.user
-    # deposits = Deposit.objects.filter(member=user)
 
     context = {
         'deposits': deposits,
         'total_deposited': total_deposited,
         'balance': balance,
     }
-    return render(request, 'dashboard.html', context)
+    response = render(request, 'dashboard.html', context)
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
 
 @login_required
 def line_chart(request):
     deposits = Deposit.objects.filter(member=request.user).values('date_paid').annotate(total=Sum('amount')).order_by(
         'date_paid')
-
     labels = [deposit['date_paid'].strftime('%Y-%m-%d') for deposit in deposits]
     data = [deposit['total'] for deposit in deposits]
-
     return JsonResponse({'title': "Deposits Over Time", 'data': {'labels': labels, 'datasets': [
         {'label': 'KES Deposited', 'data': data, 'borderColor': '#4e73df', 'fill': False}]}})
 
@@ -219,10 +146,8 @@ def line_chart(request):
 @login_required
 def bar_chart(request):
     deposit_status = Deposit.objects.filter(member=request.user).values('status').annotate(total=Sum('amount'))
-
     labels = [deposit['status'] for deposit in deposit_status]
     data = [deposit['total'] for deposit in deposit_status]
-
     return JsonResponse({'title': "Deposits by Status", 'data': {'labels': labels, 'datasets': [
         {'label': 'KES Deposited', 'data': data, 'backgroundColor': ['#1cc88a', '#e74a3b']}]}})
 
@@ -230,30 +155,20 @@ def bar_chart(request):
 @login_required
 def pie_chart(request):
     deposit_types = Deposit.objects.filter(member=request.user).values('payment_method').annotate(total=Sum('amount'))
-
     labels = [deposit['payment_method'] for deposit in deposit_types]
     data = [deposit['total'] for deposit in deposit_types]
-
-    return JsonResponse({
-        'title': "Deposits by Payment Method",
-        'data': {
-            'labels': labels,
-            'datasets': [{
-                'data': data,
-                'backgroundColor': ['#36b9cc', '#f6c23e']  # Colors for Mobile Money & Cash
-            }]
-        }
-    })
+    return JsonResponse({'title': "Deposits by Payment Method", 'data': {'labels': labels, 'datasets': [
+        {'data': data, 'backgroundColor': ['#36b9cc', '#f6c23e']}]}})
 
 
 @login_required
 def members(request):
-    data = Member.objects.all().order_by('id').values()  # ORM select * from members
+    data = Member.objects.all().order_by('id').values()
     paginator = Paginator(data, 15)
     page = request.GET.get('page', 1)
     try:
         paginated_data = paginator.page(page)
-    except  EmptyPage:
+    except EmptyPage:
         paginated_data = paginator.page(1)
     return render(request, "members.html", {"data": paginated_data})
 
@@ -267,18 +182,16 @@ def member_details(request):
 @login_required
 def profile_update(request):
     user = request.user
-
     if request.method == "POST":
         form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, "Profile updated successfully!")
-            return redirect("update_profile")  # Redirect back to the same page
+            return redirect("update_profile")
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = ProfileUpdateForm(instance=user)
-
     return render(request, "profile_update.html", {"form": form})
 
 
@@ -287,16 +200,16 @@ def initiate_stk_push(request):
     if request.method == "POST":
         amount = request.POST.get("amount")
         department = request.POST.get("department")
-        phone_number = request.user.member.phone  # Ensure correct phone field
+        phone = request.POST.get("phone_number")  # Get phone number from form input
 
         # Validate inputs
-        if not amount or not department or not phone_number:
+        if not amount or not department or not phone:
             messages.error(request, "Invalid input. Ensure all fields are filled.")
             return redirect("deposit_form")
 
         # Get department paybill info
         paybill_info = DEPARTMENT_PAYBILLS.get(department, {})
-        paybill_number = paybill_info.get("paybill", settings.MPESA_EXPRESS_SHORTCODE)  # Use default if missing
+        paybill_number = paybill_info.get("paybill", settings.MPESA_EXPRESS_SHORTCODE)
         account_number = paybill_info.get("account_number", "ChurchDeposit")
 
         # Generate Timestamp & Password
@@ -320,10 +233,10 @@ def initiate_stk_push(request):
             "Timestamp": timestamp,
             "TransactionType": "CustomerPayBillOnline",
             "Amount": int(amount),
-            "PartyA": phone_number,
+            "PartyA": phone,  # Use entered phone number
             "PartyB": settings.MPESA_EXPRESS_SHORTCODE,
-            "PhoneNumber": phone_number,
-            "CallBackURL": "https://82f6-102-219-208-154.ngrok-free.app",
+            "PhoneNumber": phone,  # Use entered phone number
+            "CallBackURL": "https://your-callback-url.com",
             "AccountReference": account_number,
             "TransactionDesc": "Church Member Deposit"
         }
@@ -338,7 +251,7 @@ def initiate_stk_push(request):
 
             # Save deposit
             Deposit.objects.create(
-                member=request.user.member,
+                member=request.member,  # Save deposit under logged-in member
                 amount=amount,
                 status="Pending",
                 paybill_number=paybill_number,
@@ -346,31 +259,35 @@ def initiate_stk_push(request):
                 transaction_id=transaction_id
             )
             messages.success(request, "M-Pesa request sent! Check your phone.")
+            return redirect("deposit_form")
         else:
             messages.error(request, "Failed to send M-Pesa request. Try again.")
+            return redirect("deposit_form")
 
+    else:
+        messages.error(request, "Invalid request method.")
         return redirect("deposit_form")
 
 
 def get_access_token():
     url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
     headers = {
-        "Authorization": "Basic " + base64.b64encode(
-            f"{settings.MPESA_CONSUMER_KEY}:{settings.MPESA_CONSUMER_SECRET}".encode()
-        ).decode()
+        "Authorization": f"Basic {base64.b64encode(f'{settings.MPESA_CONSUMER_KEY}:{settings.MPESA_CONSUMER_SECRET}'.encode()).decode()}"
     }
 
     response = requests.get(url, headers=headers)
-    response_data = response.json()
 
-    if "access_token" in response_data:
-        return response_data["access_token"]
+    print("Raw Response Content:", response.text)  # Print full response
+    print("HTTP Status Code:", response.status_code)  # Print HTTP code
 
-    print("Failed to get access token:", response_data)  # Debugging
-    return None
+    try:
+        response_data = response.json()
+        return response_data.get("access_token")
+    except requests.exceptions.JSONDecodeError:
+        print("Error: Invalid JSON Response from M-Pesa API")
+        return None  # Prevent crashing
 
 
-@login_required
 @csrf_exempt
 def mpesa_callback(request):
     try:
@@ -403,16 +320,6 @@ def mpesa_callback(request):
 
 @login_required
 def deposit_form(request):
-    if request.method == "POST":
-        department = request.POST.get("department")
-        amount = request.POST.get("amount")
-        phone_number = request.POST.get("phone_number")
-
-        if department and amount and phone_number:
-            return JsonResponse({"success": True, "message": "Deposit request sent successfully! Check your phone for a prompt."})
-        else:
-            return JsonResponse({"success": False, "message": "Error processing deposit. Please try again."})
-
     return render(request, "deposit_form.html")
 
 
@@ -443,7 +350,6 @@ def send_sms_notification(phone_number, amount, transaction_id):
     return message.sid
 
 
-# Upload an Event
 @login_required
 def upload_event(request):
     if request.method == "POST":
@@ -451,13 +357,12 @@ def upload_event(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Event uploaded successfully!")
-            return redirect("events_list")
+            return redirect("events")
     else:
         form = EventForm()
     return render(request, "events/upload.html", {"form": form})
 
 
-# Register for an Event
 def register_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
@@ -465,30 +370,23 @@ def register_event(request, event_id):
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()
 
-        if not name:
-            messages.error(request, "Name is required.")
+        if not name or not email:
+            messages.error(request, "Name and Email are required.")
             return redirect("event-details", event_id=event.id)
 
-        if not email:
-            messages.error(request, "Email is required.")
-            return redirect("event-details", event_id=event.id)
-
-        # Check if the email is already registered for this event
         existing_registration = EventRegistration.objects.filter(event=event, email=email).exists()
 
         if existing_registration:
             messages.warning(request, "You have already registered for this event.")
         else:
-            # Create and save registration
             EventRegistration.objects.create(event=event, name=name, email=email)
             messages.success(request, "Registration successful!")
 
-        return redirect("event-details", event_id=event.id)  # Redirect to event details
+        return redirect("event-details", event_id=event.id)
 
-    return render(request, "events-details.html", {"event": event})
+    return redirect("event-details", event_id=event.id)  # Redirect if not post.
 
 
-# Upload a Blog Post
 @login_required
 def upload_blog(request):
     if request.method == "POST":
@@ -496,13 +394,12 @@ def upload_blog(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Blog post added!")
-            return redirect("blog_list")
+            return redirect("blog")
     else:
         form = BlogForm()
     return render(request, "blogs/upload.html", {"form": form})
 
 
-# Upload a Sermon
 @login_required
 def upload_sermon(request):
     if request.method == "POST":
@@ -510,7 +407,7 @@ def upload_sermon(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Sermon uploaded successfully!")
-            return redirect("sermon_list")
+            return redirect("sermon")
     else:
         form = SermonForm()
     return render(request, "sermons/upload.html", {"form": form})
@@ -555,3 +452,45 @@ def children_department(request):
 def custom_logout(request):
     logout(request)
     return redirect("/admin/login/")
+
+
+def live_service(request):
+    return render(request, 'live_service.html')
+
+
+from django.core.paginator import Paginator, EmptyPage
+
+
+def sermon(request):
+    sermons = Sermon.objects.all()
+    paginator = Paginator(sermons, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'sermon.html', {'page_obj': page_obj})
+
+
+def blog(request):
+    blogs = Blog.objects.all().order_by('-created_at')
+    paginator = Paginator(blogs, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'blog.html', {'page_obj': page_obj})
+
+
+def events(request):
+    events = Event.objects.all()
+    paginator = Paginator(events, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'events.html', {'page_obj': page_obj})
+
+
+def blog_detail(request, slug):
+    blog_post = get_object_or_404(Blog, slug=slug)
+    comments = Comment.objects.filter(blog=blog_post)
+    return render(request, 'blog-details.html', {'blog_post': blog_post, 'comments': comments})
+
+
+def event_details(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    return render(request, 'events-details.html', {'event': event})

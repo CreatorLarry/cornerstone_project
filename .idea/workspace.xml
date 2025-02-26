@@ -5,34 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed55e93b-801c-4162-bbbe-3a62f95b9eca" name="Changes" comment="dashboard, check">
-      <change afterPath="$PROJECT_DIR$/main/assets/img/kama.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/assets/img/kayo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/assets/img/mu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/children_department.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/kama_department.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/kayo_department.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/mu_department.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/live_service.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cornerstone_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cornerstone_project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cornerstone_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cornerstone_project/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/migrations/0002_blog_slug_event_max_attendees_event_organizer_and_more.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/blog-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog-details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/dashboard_master.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard_master.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/departments.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/departments.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/deposit_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/deposit_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/events-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/events-details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/master.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/master.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/new-member-registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/new-member-registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sermon.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sermon.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +153,9 @@
       <workItem from="1740116852924" duration="397000" />
       <workItem from="1740297978947" duration="3681000" />
       <workItem from="1740304569249" duration="5686000" />
-      <workItem from="1740387171515" duration="21939000" />
+      <workItem from="1740387171515" duration="29058000" />
+      <workItem from="1740555223525" duration="306000" />
+      <workItem from="1740574101067" duration="600000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard, check">
       <option name="closed" value="true" />

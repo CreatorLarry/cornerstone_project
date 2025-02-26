@@ -15,14 +15,13 @@
         {% endfor %}
     {% endif %}
 
-
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h4 class="text-center mb-3">Make a Deposit</h4>
-                        <form id="depositForm" method="post" action="{% url 'deposit_form' %}">
+                        <form method="post" action="{% url 'initiate_stk_push' %}">
                             {% csrf_token %}
 
                             <div class="mb-3">
@@ -52,43 +51,4 @@
             </div>
         </div>
     </div>
-
-{% endblock %}
-
-{% block extra_js %}
-    <script>
-        $(document).ready(function () {
-            $("#depositForm").submit(function (event) {
-                event.preventDefault(); // Prevent default form submission
-
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'deposit_form' %}",
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        if (response.success) {
-                            $("#depositForm")[0].reset(); // Reset form
-                            showAlert("success", response.message);
-                        } else {
-                            showAlert("danger", response.message);
-                        }
-                    },
-                    error: function () {
-                        showAlert("danger", "Something went wrong. Try again.");
-                    }
-                });
-            });
-
-            function showAlert(type, message) {
-                let alertBox = `
-                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>`;
-                $(".container").prepend(alertBox); // Insert alert at the top
-            }
-        });
-    </script>
-
-
 {% endblock %}

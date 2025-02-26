@@ -106,6 +106,8 @@ urlpatterns = [
 
                   path("sermons/upload/", views.upload_sermon, name="upload_sermon"),
 
+                  path("live-service/", views.live_service, name="live_service"),
+
                   path("admin/logout/", custom_logout, name="custom_logout"),
 
                   path('admin/', admin.site.urls),

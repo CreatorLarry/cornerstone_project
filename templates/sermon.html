@@ -22,7 +22,7 @@
         <!-- End Page Title -->
 
         <!-- Sermons Section -->
-        <section id="sermons" class="sermons section">
+        <section id="blog-posts" class="blog-posts section">
             <div class="container">
                 <div class="row gy-4">
                     {% for sermon in sermons %}
@@ -48,7 +48,8 @@
                                     {% if sermon.video_url %}
                                         <div class="watch-video d-flex align-items-center">
                                             <i class="bi bi-play-circle"></i>
-                                            <a href="{{ sermon.video_url }}" target="_blank" class="readmore stretched-link">Watch
+                                            <a href="{{ sermon.video_url }}" target="_blank"
+                                               class="readmore stretched-link">Watch
                                                 Sermon</a>
                                         </div>
                                     {% else %}
@@ -58,24 +59,8 @@
                             </article>
                         </div>
                     {% empty %}
-                        <p>No sermons available.</p>
+                        <p>No Sermons Available</p>
                     {% endfor %}
-                </div>
-                <!-- Pagination -->
-                <div class="pagination">
-                    {% if sermons.has_other_pages %}
-                        <ul class="pagination">
-                            {% if sermons.has_previous %}
-                                <li><a href="?page=1">&laquo; First</a></li>
-                                <li><a href="?page={{ sermons.previous_page_number }}">Previous</a></li>
-                            {% endif %}
-                            <li class="current">Page {{ sermons.number }} of {{ sermons.paginator.num_pages }}</li>
-                            {% if sermons.has_next %}
-                                <li><a href="?page={{ sermons.next_page_number }}">Next</a></li>
-                                <li><a href="?page={{ sermons.paginator.num_pages }}">Last &raquo;</a></li>
-                            {% endif %}
-                        </ul>
-                    {% endif %}
                 </div>
             </div>
         </section>

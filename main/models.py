@@ -62,7 +62,7 @@ class Member(AbstractBaseUser, PermissionsMixin):
 
     objects = MemberManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'second_name', 'phone_number']
+    REQUIRED_FIELDS = ['first_name', 'second_name', 'phone']
 
     def __str__(self):
         return f"{self.first_name} {self.second_name}"
@@ -104,13 +104,24 @@ class Sermon(models.Model):
         return f"{self.title} - {self.preacher}"
 
 
+class LiveService(models.Model):
+    service_name = models.CharField(max_length=50)
+    date = models.DateTimeField(auto_now_add=True)
+    preacher = models.CharField(max_length=50)
+    start_time = models.TimeField()
+    video_url = models.URLField(blank=True, null=True)  # Store YouTube link
+
+    def embed_youtube(self):
+        if self.video_url:
+            video_id = self.video_url.split('v=')[-1]  # extract video id
+            return f'https://www.youtube.com/watch?v={video_id}'
+        return None
+    def __str__(self):
+        return f"{self.service_name}"
+
+
 # Event Model
 class Event(models.Model):
-    CATEGORY_CHOICES = [
-        ('organizer', 'Department Organizer'),
-        ('weekly', 'Weekly Event'),
-        ('other', 'Other Event'),
-    ]
     title = models.CharField(max_length=100)
     organizer = models.CharField(max_length=100, blank=True, null=True)
     registration_required = models.BooleanField(default=False)
@@ -153,9 +164,15 @@ class Deposit(models.Model):
 
 
 class EventRegistration(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    STATUS_CHOICES = [
+        ('confirmed', 'Confirmed'),
+        ('pending', 'Pending'),
+    ]
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="registrations")
     name = models.CharField(max_length=150, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+    contact = models.CharField(max_length=150, blank=True, null=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     registered_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -180,10 +197,37 @@ class Comment(models.Model):
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=150)
-    email = models.EmailField()
-    subject = models.CharField(max_length=255)
+    email = models.EmailField(blank=True, null=True)
+    subject = models.CharField(max_length=100)
     message = models.TextField()
     sent_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} - {self.subject}"
+
+
+class Message(models.Model):
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="messages")
+    subject = models.CharField(max_length=100)
+    content = models.TextField()
+    sent_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.subject} - {self.recipient.email}"
+
+
+class SMSTemplate(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    content = models.TextField(help_text="Use {name} or {event} as placeholders.")
+
+    def __str__(self):
+        return self.name
+
+
+class NewsletterSubscriber(models.Model):
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
