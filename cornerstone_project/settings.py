@@ -216,8 +216,8 @@ STATICFILES_DIRS = [BASE_DIR / 'main/assets']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Handling SMS Using Twilio
-TWILIO_ACCOUNT_SID = "AC8bf4c3e2da2f01a557bed4eafcfb9f8d"
-TWILIO_AUTH_TOKEN = "c038f3499f40928b85fe58497d0e655e"
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
 TWILIO_PHONE_NUMBER = "+254758781717"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
