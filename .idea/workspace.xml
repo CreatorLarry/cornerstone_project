@@ -5,8 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed55e93b-801c-4162-bbbe-3a62f95b9eca" name="Changes" comment="dashboard, check">
+      <change beforePath="$PROJECT_DIR$/.idea/cornerstone_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cornerstone_project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/live_service.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/live_service.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cornerstone_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cornerstone_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cornerstone_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cornerstone_project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard_master.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/deposit_form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/deposit_report.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/master.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/master.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/member_details.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/new-member-registration.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/password_reset_complete.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/password_reset_confirm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/password_reset_done.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/profile_update.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/transactions.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,25 +71,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.cornerstone_project.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Creator_Larry/topheights&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.cornerstone_project.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Creator_Larry/proposed_cornerstone_project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Creator_Larry\cornerstone_project\templates" />
@@ -145,7 +167,12 @@
       <workItem from="1740387171515" duration="29058000" />
       <workItem from="1740555223525" duration="306000" />
       <workItem from="1740574101067" duration="3041000" />
-      <workItem from="1741156529978" duration="1317000" />
+      <workItem from="1741156529978" duration="3095000" />
+      <workItem from="1741232513750" duration="1219000" />
+      <workItem from="1741249579328" duration="1917000" />
+      <workItem from="1741408730673" duration="12000" />
+      <workItem from="1741779282031" duration="621000" />
+      <workItem from="1742883264751" duration="1688000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard, check">
       <option name="closed" value="true" />

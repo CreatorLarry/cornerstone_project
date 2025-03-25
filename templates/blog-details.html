@@ -35,7 +35,7 @@
                     <section id="blog" class="blog">
                         <div class="container" data-aos="fade-up">
                             <div class="row">
-                                <div class="col-lg-8 entries">
+                                <div class="col-lg-12 entries">
                                     <article class="entry entry-single">
                                         <div class="entry-img">
                                             {% if blog_post.image %}
@@ -60,9 +60,11 @@
                                                         href="#">{{ comments.count }} Comments</a></li>
                                             </ul>
                                         </div>
-                                        <div class="entry-content">
-                                            <p>{{ blog_post.content|safe }}</p>
+
+                                        <div class="content entry-content">
+                                                <p>{{ blog_post.content|linebreaks }}</p>
                                         </div>
+
                                     </article>
 
                                     <!-- Blog Comments Section -->

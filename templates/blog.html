@@ -28,14 +28,12 @@
                             <article class="position-relative h-100">
                                 <div class="post-img position-relative overflow-hidden">
                                     {% if blog_post.image %}
-                                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}"
-                                             class="img-fluid">
+                                        <img src="{{ blog_post.image.url }}" class="img-fluid"
+                                             alt="{{ blog.title }}">
                                     {% else %}
                                         <img src="{% static 'img/blog/img_1.png' %}" alt="No image available"
                                              class="img-fluid">
                                     {% endif %}
-{#                                    <img src="{{ blog.image.url }}" class="img-fluid uniform-img"#}
-{#                                         alt="{{ blog.title }}">#}
                                     <span class="post-date">{{ blog.created_at|date:"F d" }}</span>
                                 </div>
 

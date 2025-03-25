@@ -169,6 +169,7 @@ h6 {
     margin-right: 8px;
 }
 
+
 .header .logo h1 {
     font-size: 26px;
     margin: 0;
@@ -391,6 +392,12 @@ h6 {
         border-radius: 50%;
         transition: 0.3s;
         background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+    }
+
+    @media (max-width: 768px) {
+        .sitename {
+            display: none;
+        }
     }
 
     .navmenu a i:hover,
@@ -1788,7 +1795,7 @@ section,
 
 .portfolio-details .portfolio-description .testimonial-item p {
     font-style: italic;
-    margin: 0 0 15px 0 0 0;
+    margin: 0 0 0 15px;
     padding: 0;
 }
 
@@ -2729,8 +2736,39 @@ section,
 
     .custom-contact-form button {
         font-size: 16px;
-        padding: 10px 16px;
+        padding: 10px 16px
     }
 }
 
+.content.entry-content {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
 
+.content.entry-content p {
+    margin-bottom: 15px;
+}
+
+.content.entry-content strong {
+    font-weight: bold;
+    color: #222;
+}
+
+.content.entry-content em {
+    font-style: italic;
+    color: #555;
+}
+
+.content.entry-content blockquote {
+    font-style: italic;
+    background: #f3f3f3;
+    border-left: 4px solid #007bff;
+    padding: 10px 15px;
+    margin: 15px 0;
+}

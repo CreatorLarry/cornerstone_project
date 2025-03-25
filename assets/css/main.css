@@ -169,6 +169,8 @@ h6 {
     margin-right: 8px;
 }
 
+
+
 .header .logo h1 {
     font-size: 26px;
     margin: 0;
@@ -391,6 +393,12 @@ h6 {
         border-radius: 50%;
         transition: 0.3s;
         background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+    }
+
+    @media (max-width: 768px) {
+        .sitename{
+            display: none;
+        }
     }
 
     .navmenu a i:hover,
@@ -1788,7 +1796,7 @@ section,
 
 .portfolio-details .portfolio-description .testimonial-item p {
     font-style: italic;
-    margin: 0 0 15px 0 0 0;
+    margin: 0 0 0 15px;
     padding: 0;
 }
 
@@ -2729,49 +2737,6 @@ section,
 
     .custom-contact-form button {
         font-size: 16px;
-        padding: 10px 16px;
+        padding: 10px 16px
     }
-}
-
-
-body, #header {
-    background-color: #e8f5e9 !important; /* Light green background */
-}
-
-#branding h1 {
-    color: #2c662d !important; /* Dark green text */
-}
-
-.module h2, .module caption {
-    background: #a5d6a7 !important; /* Green header sections */
-}
-
-.button, input[type="submit"] {
-    background-color: #4caf50 !important; /* Green buttons */
-    color: white !important;
-}
-
-/* Change background color */
-body.login {
-    background-color: #e8f5e9 !important; /* Light green */
-}
-
-/* Change login form box */
-.login .submit-row input {
-    background-color: #4caf50 !important; /* Green button */
-    color: white !important;
-}
-
-.login .submit-row input:hover {
-    background-color: #388e3c !important;
-}
-
-/* Change Django Admin Header */
-#header {
-    background: #4caf50 !important;
-}
-
-/* Change Django Admin Menu Color */
-#nav-sidebar {
-    background: #c8e6c9 !important;
 }

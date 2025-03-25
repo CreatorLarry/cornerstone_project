@@ -40,9 +40,11 @@
                     <div class="col-lg-8">
                         <article class="article">
 
-                            <div class="post-img">
+                            {% if events.image %}
                                 <img src="{{ events.image.url }}" alt="{{ events.title }}" class="img-fluid mb-3">
-                            </div>
+                            {% else %}
+                                <p style="color: red;">No image found for this event.</p>
+                            {% endif %}
 
                             <h2>{{ events.title }}</h2>
 
@@ -64,17 +66,21 @@
                         <div class="widgets-container">
                             <div class="card p-3 custom-contact-form">
                                 <h3 class="mb-3">Register for this Event</h3>
-                                <form method="post" action="{% url 'register_event' events.id %}">
-                                    {% csrf_token %}
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Your Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                {% if events.id %}
+                                    <form method="post" action="{% url 'register_event' events.id %}">
+                                {% else %}
+                                    <p>Error: Event ID not found.</p>
+                                {% endif %}
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Your Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Register</button>
                                 </form>
                             </div>
                         </div>

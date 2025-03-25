@@ -22,7 +22,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from main import views
-from main.views import custom_logout
 
 urlpatterns = [
                   path('', views.home, name='home'),
@@ -56,59 +55,12 @@ urlpatterns = [
 
                   path('contact/', views.contact_view, name='contact'),
 
-                  path('login/', views.login_member, name='login'),
-
-                  path('logout/', views.logout_member, name='logout'),
-
-                  path('new-member-registration/', views.new_member_registration, name='new-member-registration'),
-
-                  path("password_reset/", auth_views.PasswordResetView.as_view(template_name="password_reset.html"),
-                       name="password_reset"),
-                  path("password_reset/done/",
-                       auth_views.PasswordResetDoneView.as_view(template_name="password_reset_done.html"),
-                       name="password_reset_done"),
-                  path("reset/<uidb64>/<token>/",
-                       auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"),
-                       name="password_reset_confirm"),
-                  path("reset/done/",
-                       auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),
-                       name="password_reset_complete"),
-
-                  path('dashboard/', views.member_dashboard, name='member_dashboard'),
-
-                  path('pie-chart', views.pie_chart, name='pie_chart'),
-
-                  path('line-chart', views.line_chart, name='line_chart'),
-
-                  path('bar-chart', views.bar_chart, name='bar_chart'),
-
-                  path('member-details', views.member_details, name='member_details'),
-
-                  path('profile-update', views.profile_update, name='update_profile'),
-
-                  path('deposit-form', views.deposit_form, name='deposit_form'),
-
-                  path('initiate-stk-push/', views.initiate_stk_push, name='initiate_stk_push'),
-
-                  path("admin/deposit-report/", views.deposit_report, name="deposit_report"),
-
-                  path('mpesa/callback/', views.mpesa_callback, name='mpesa_callback'),
-
-                  path('members/', views.members, name='members'),
-
-                  path("events/upload/", views.upload_event, name="upload_event"),
 
                   path('register/<int:event_id>/', views.register_event, name='register_event'),
 
-                  path("blogs/upload/", views.upload_blog, name="upload_blog"),
-
                   path("blogs/add-comment", views.add_comment, name="add_comment"),
 
-                  path("sermons/upload/", views.upload_sermon, name="upload_sermon"),
-
                   path("live-service/", views.live_service, name="live_service"),
-
-                  path("admin/logout/", custom_logout, name="custom_logout"),
 
                   path('admin/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
