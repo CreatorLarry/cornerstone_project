@@ -1,0 +1,75 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Giving</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <section class="giving-section section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Support Our Ministry</h2>
+                <p class="text-muted fs-5">
+                    Your giving helps us spread the Gospel, reach more souls, and support community work.
+                </p>
+            </div>
+
+            <div class="row gy-4 justify-content-center">
+                <!-- M-Pesa Card -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card shadow-sm border-0 flex-fill text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="bi bi-phone-fill fs-2 text-success mb-3"></i>
+                            <h5 class="card-title">M-Pesa Paybill</h5>
+                            <p class="mb-1">Paybill Number: <strong>123456</strong></p>
+                            <p>Account Name: <strong>Cornerstone</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bank Card -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card shadow-sm border-0 flex-fill text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="bi bi-bank2 fs-2 text-primary mb-3"></i>
+                            <h5 class="card-title">Bank Transfer</h5>
+                            <p class="mb-1">Bank: <strong>Equity Bank</strong></p>
+                            <p class="mb-1">Account Name: <strong>Cornerstone Ministries</strong></p>
+                            <p>Account Number: <strong>0123456789</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Card -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card shadow-sm border-0 flex-fill text-center">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <i class="bi bi-chat-dots-fill fs-2 text-info mb-3"></i>
+                            <h5 class="card-title">Need Help Giving?</h5>
+                            <p class="mb-1">Call or WhatsApp:</p>
+                            <p><strong><a href="tel:+254712345678">+254 712 345 678</a></strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thank You -->
+            <div class="text-center mt-5">
+                <h5 class="text-success fw-semibold">Thank you for your generous support.</h5>
+                <p class="text-muted">We are truly grateful for every seed you plant into this ministry.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+{% endblock %}
+

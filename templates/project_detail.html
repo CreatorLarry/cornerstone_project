@@ -1,0 +1,62 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Project Details</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <section class="container py-5">
+        <h2 class="text-center">{{ project.title }}</h2>
+        <p class="text-center text-muted">{{ project.status|title }} Project</p>
+
+        <!-- Cover Image -->
+        <div class="text-center mb-4">
+            <img src="{{ project.cover_image.url }}" class="img-fluid rounded shadow" alt="Project Cover">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-5">
+            <h4>Project Overview</h4>
+            <p style="line-height: 1.8; font-size: 1.1rem;">{{ project.description|linebreaks }}</p>
+        </div>
+
+        <!-- Image Gallery -->
+        {% if project.images.all %}
+            <div class="mb-5">
+                <h4>Project Photos</h4>
+                <div class="row g-3">
+                    {% for image in project.images.all %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{{ image.image.url }}" class="card-img-top" alt="Project photo">
+                                {% if image.caption %}
+                                    <div class="card-body">
+                                        <p class="card-text">{{ image.caption }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Donate Button -->
+        <div class="text-center">
+            <a href="{% url 'giving' %}?project={{ project.id }}" class="btn btn-success btn-lg px-4">
+                Donate Now
+            </a>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
+

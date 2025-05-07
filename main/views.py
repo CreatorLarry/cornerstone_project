@@ -6,8 +6,13 @@ from django.core.paginator import Paginator, EmptyPage
 from django.db.models.aggregates import Sum
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import get_template
+from django.utils.timezone import now
+from weasyprint import HTML
 
-from main.models import ContactMessage, EventRegistration, Event, Blog, Comment, Sermon
+from main.models import ContactMessage, EventRegistration, Event, Blog, Comment, Sermon, LiveService, AdminActivityLog, \
+    Notice, Project
+
 User = get_user_model()
 
 import requests, base64, json, os
@@ -65,6 +70,7 @@ def contact_view(request):
 
     return render(request, "contact.html")
 
+
 def register_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
 
@@ -87,6 +93,7 @@ def register_event(request, event_id):
         return redirect("event-details", event_id=event.id)
 
     return redirect("event-details", event_id=event.id)  # Redirect if not post.
+
 
 @csrf_exempt
 def add_comment(request, slug):
@@ -124,9 +131,9 @@ def children_department(request):
     return render(request, 'children_department.html')
 
 
-
 def live_service(request):
-    return render(request, 'live_service.html')
+    live_service = LiveService.objects.all()
+    return render(request, 'live_service.html', {"live_service": live_service})
 
 
 from django.core.paginator import Paginator, EmptyPage
@@ -149,7 +156,7 @@ def blog(request):
 
 
 def events(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-date')
     paginator = Paginator(events, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -165,3 +172,38 @@ def blog_detail(request, slug):
 def event_details(request, event_id):
     events = get_object_or_404(Event, id=event_id)
     return render(request, 'events-details.html', {'events': events})
+
+
+def export_logs_pdf(request):
+    logs = AdminActivityLog.objects.all().order_by('-timestamp')
+    template = get_template('export_logs_pdf.html')
+    html = template.render({'logs': logs, 'now': now()})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="admin_activity_logs.pdf"'
+    HTML(string=html).write_pdf(response)
+    return response
+
+
+def notices(request):
+    notices = Notice.objects.order_by('-date')
+    return render(request, 'notices.html', {'notices': notices})
+
+
+def notice_details(request, pk):
+    notice = get_object_or_404(Notice, pk=pk)
+    return render(request, 'notices_details.html', {'notice': notice})
+
+
+def giving(request):
+    return render(request, 'giving.html')
+
+
+def projects(request):
+    project = Project.objects.all().order_by('-created_at')
+    return render(request, 'projects.html', {'project': project})
+
+
+def project_detail(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    return render(request, 'project_detail.html', {'project': project})

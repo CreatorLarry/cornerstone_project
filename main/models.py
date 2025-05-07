@@ -58,6 +58,7 @@ class LiveService(models.Model):
             video_id = self.video_url.split('v=')[-1]  # extract video id
             return f'https://www.youtube.com/watch?v={video_id}'
         return None
+
     def __str__(self):
         return f"{self.service_name}"
 
@@ -73,6 +74,9 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='event_images/', default='events/default.jpg')
+
+    def __str__(self):
+        return f"{self.title} - {self.date.strftime('%Y-%m-%d')}"
 
 
 class EventRegistration(models.Model):
@@ -129,10 +133,52 @@ class Message(models.Model):
         return f"{self.subject} - {self.recipient.email}"
 
 
-
 class NewsletterSubscriber(models.Model):
     email = models.EmailField(unique=True)
     subscribed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.email
+
+
+class AdminActivityLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    action = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.action} - {self.timestamp}"
+
+class Notice(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    posted_by = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='notice_images/', default='notices/default.jpg', blank=True, null=True)
+
+
+class Project(models.Model):
+    STATUS_CHOICES = [
+        ('ongoing', 'Ongoing'),
+        ('completed', 'Completed'),
+        ('planned', 'Planned'),
+    ]
+
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    cover_image = models.ImageField(upload_to='project_covers/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='project_photos/', null=True, blank=True)
+    caption = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return f"Image for {self.project.title}"

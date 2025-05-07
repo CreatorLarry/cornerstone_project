@@ -56,35 +56,38 @@
                             </div><!-- End meta top -->
 
                             <div class="content">
-                                <p><strong>Description:</strong> {{ events.description }}</p>
+                                <p>{{ events.description }}</p>
                             </div>
 
                         </article>
                     </div>
 
-                    <div class="col-lg-4 sidebar">
-                        <div class="widgets-container">
-                            <div class="card p-3 custom-contact-form">
-                                <h3 class="mb-3">Register for this Event</h3>
-                                {% if events.id %}
-                                    <form method="post" action="{% url 'register_event' events.id %}">
-                                {% else %}
-                                    <p>Error: Event ID not found.</p>
-                                {% endif %}
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" required>
+                    {% if events.registration_required %}
+                        <div class="col-lg-4 sidebar">
+                            <div class="widgets-container">
+                                <div class="card p-3 custom-contact-form">
+                                    <h3 class="mb-3">Register for this Event</h3>
+                                    {% if events.id %}
+                                        <form method="post" action="{% url 'register_event' events.id %}">
+                                    {% else %}
+                                        <p>Error: Event ID not found.</p>
+                                    {% endif %}
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Your Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                    </form>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Your Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Register</button>
-                                </form>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
+
                 </div>
 
 

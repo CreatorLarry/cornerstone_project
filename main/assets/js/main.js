@@ -191,9 +191,18 @@
 })();
 
 
-    var swiper = new Swiper('.swiper-container', {
+var swiper = new Swiper('.swiper-container', {
     loop: true,
     autoplay: {delay: 3000},
     pagination: {el: '.swiper-pagination', clickable: true},
     navigation: {nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev'}
 });
+
+
+<!-- JavaScript to Open Modal -->
+function openModal(videoId) {
+    let videoFrame = document.getElementById("videoFrame");
+    videoFrame.src = "https://www.youtube.com/embed/" + videoId;
+    let modal = new bootstrap.Modal(document.getElementById("videoModal"));
+    modal.show();
+}

@@ -1,0 +1,64 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Notices</title>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    <section class="notice-details section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <!-- Header -->
+                    <div class="notice-header text-center mb-4">
+                        <h2 class="fw-bold">{{ notice.title }}</h2>
+
+                        <div class="text-muted small">
+                            <i class="bi bi-calendar-event me-1"></i>
+                            {{ notice.date|date:"F d, Y" }}
+
+                            <span class="mx-2">|</span>
+
+                            <i class="bi bi-person me-1"></i>
+                            {{ notice.posted_by }}
+                        </div>
+                    </div>
+
+                    <!-- Optional Image -->
+                    {% if notice.image %}
+                        <div class="text-center mb-4">
+                            <img src="{{ notice.image.url }}" alt="{{ notice.title }}"
+                                 class="img-fluid rounded shadow-sm">
+                        </div>
+                    {% endif %}
+
+                    <!-- Notice Body -->
+                    <div class="notice-body">
+                        <p class="lead" style="white-space: pre-line;">{{ notice.content|linebreaks }}</p>
+                    </div>
+
+                    <!-- Back Button -->
+                    <div class="mt-5 text-center">
+                        <a href="{% url 'notices' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Back to All Notices
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+{% endblock %}
+

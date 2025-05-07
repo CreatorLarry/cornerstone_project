@@ -1,11 +1,19 @@
+from datetime import timedelta
+
 from django.contrib import admin
+from django.contrib.admin import SimpleListFilter
+from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.db import models
 
 from ckeditor.widgets import CKEditorWidget
+from django.utils import timezone
+from import_export import resources
+from import_export.admin import ExportMixin
+from .models import AdminActivityLog, Notice, Project, ProjectImage, Comment
 
-from .models import Message
+from .models import Message, AdminActivityLog
 from main.models import Event, Sermon, Blog, EventRegistration, ContactMessage, LiveService
 
 admin.site.site_header = "ACK Church Administration"
@@ -71,9 +79,71 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject', 'sent_at')
 
 
-@admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('subject', 'recipient', 'sent_at', 'is_read')
 
 
+admin.site.register(Message, MessageAdmin)
+
+
+@admin.register(Notice)
+class NoticeAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content', 'date', 'posted_by')
+
+
+class AdminActivityLogResource(resources.ModelResource):
+    class Meta:
+        model = AdminActivityLog
+        fields = ('user__username', 'action', 'ip_address', 'timestamp')
+
+
+class AdminActivityLogAdmin(admin.ModelAdmin):
+    resource_class = AdminActivityLogResource
+    list_display = ('user', 'action', 'ip_address', 'timestamp')
+    list_filter = ('user', 'action', 'timestamp')
+    search_fields = ('user__username', 'action', 'ip_address')
+
+    def has_change_permission(self, request, obj=None):
+        return False  # disables 'change' and removes history button
+
+
+admin.site.register(AdminActivityLog, AdminActivityLogAdmin)
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('action_time', 'user', 'content_type', 'object_repr', 'action_flag', 'change_message')
+    list_filter = ('user', 'action_flag', 'content_type')
+    search_fields = ('object_repr', 'change_message')
+
+
 admin.site.register(User, CustomUserAdmin)
+
+
+class Last7DaysFilter(SimpleListFilter):
+    title = 'last 7 days'
+    parameter_name = 'last7days'
+
+    def lookups(self, request, model_admin):
+        return (('yes', 'Last 7 days'),)
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            last_week = timezone.now() - timedelta(days=7)
+            return queryset.filter(timestamp__gte=last_week)
+
+
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
+    extra = 1
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'status', 'created_at')
+    inlines = [ProjectImageInline]
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created_at')
+    search_fields = ('name', 'email')

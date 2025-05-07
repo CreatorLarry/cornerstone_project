@@ -55,12 +55,21 @@ urlpatterns = [
 
                   path('contact/', views.contact_view, name='contact'),
 
-
                   path('register/<int:event_id>/', views.register_event, name='register_event'),
 
-                  path("blogs/add-comment", views.add_comment, name="add_comment"),
+                  path("blogs/add-comment/", views.add_comment, name="add_comment"),
 
                   path("live-service/", views.live_service, name="live_service"),
+
+                  path("notices/", views.notices, name="notices"),
+
+                  path('notices/<int:pk>/', views.notice_details, name='notice-details'),
+
+                  path('projects/', views.projects, name='projects'),
+
+                  path('projects/<int:pk>/', views.project_detail, name='project-detail'),
+
+                  path("giving/", views.giving, name="giving"),
 
                   path('admin/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
