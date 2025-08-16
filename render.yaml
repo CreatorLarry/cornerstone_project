@@ -1,0 +1,25 @@
+databases:
+  - name: church_db
+    plan: free
+    databaseName: church
+    user: church
+
+services:
+  - type: web
+    plan: free         # you can upgrade later
+    name: church
+    runtime: python
+    buildCommand: ./build.sh
+    startCommand: python -m gunicorn cornerstone_project.asgi:application -k uvicorn.workers.UvicornWorker
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: church_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: WEB_CONCURRENCY
+        value: "4"
+

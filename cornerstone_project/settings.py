@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 from django.contrib import messages
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vmg7c4%7o-s4qv_!(&cnk!d^6hce&9gvejza12$@4ls%^pqzke'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -158,18 +160,11 @@ WSGI_APPLICATION = 'cornerstone_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cornerstone_project_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',  # Ensures proper storage of Unicode characters
-            'init_command': "SET default_storage_engine=INNODB;"
-        },
-    }
+    "default": dj_database_url.config(
+        default="sqlite:///db.sqlite3",  # fallback for local/dev
+        conn_max_age=600,
+        ssl_require=False
+    )
 }
 
 # Password validation
@@ -210,6 +205,7 @@ STATIC_ROOT = BASE_DIR / 'assets'
 
 STATICFILES_DIRS = [BASE_DIR / 'main/assets']
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -224,8 +220,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv("artyourdreams1@gmail.com")
-EMAIL_HOST_PASSWORD = os.getenv("srxs xzkd nfjd gbym")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
